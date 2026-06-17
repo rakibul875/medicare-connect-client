@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/shear/NavBar";
+import Footer from "@/components/shear/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
       <body className="bg-light min-h-full flex flex-col">
         <NavBar />
         {children}
+        <Footer/>
         </body>
     </html>
   );
