@@ -11,6 +11,7 @@ import {
   FieldError,
 } from "@heroui/react";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
 const SingUpForm = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ const SingUpForm = () => {
     password: "",
     phone: "",
     gender: "",
+    status:'pending',
   });
 
   const [imageFile, setImageFile] = useState(null);
@@ -64,17 +66,25 @@ const SingUpForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const finalUserData = {
       ...formData,
-      profilePhoto: imageUrl,
+      profilePhoto: imageUrl, 
       role: formData.role || "patient",
     };
+    console.log("form Data",finalUserData)
+    const { data, error } = await authClient.signUp.email({
+      ...finalUserData,
+    });
 
-    console.log("Submitted Data object to Backend:", finalUserData);
-    alert("Form submitted successfully! Check console for final JSON.");
+    console.log("Submitted Data object to Backend:", data);
+    if (data) {
+      alert("singUp Successful");
+    } else {
+      error.message;
+    }
   };
 
   return (
@@ -89,7 +99,10 @@ const SingUpForm = () => {
           </p>
           <p className="text-sm text-gray-600 text-center">
             You have already an account?{" "}
-            <Link href="/login" className="font-medium text-lg text-[#006694] hover:underline">
+            <Link
+              href="/login"
+              className="font-medium text-lg text-[#006694] hover:underline"
+            >
               Login
             </Link>
           </p>
