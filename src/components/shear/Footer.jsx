@@ -5,9 +5,14 @@ import Link from "next/link";
 import { FaFacebook, FaLinkedin, FaPhoneAlt, FaTwitter } from "react-icons/fa";
 
 import { MdOutlineMail } from "react-icons/md";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
+  const pathname=usePathname()
+  if(pathname.includes('dashboard')){
+    return null
+  }
 
   const handleSubscribe = (e) => {
     e.preventDefault();
