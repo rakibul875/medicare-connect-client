@@ -15,7 +15,6 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Submitted Data:", formData);
     const { data, error } = await authClient.signIn.email({
       email: formData.email,
       password: formData.password,
