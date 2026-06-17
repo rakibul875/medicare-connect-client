@@ -8,6 +8,8 @@ import {
   Select,
   ListBox,
   Button,
+  Description,
+  FieldError,
 } from "@heroui/react";
 import Link from "next/link";
 
@@ -124,18 +126,37 @@ const SingUpForm = () => {
               />
             </TextField>
 
-            <TextField className="w-full">
+            <TextField
+              className="w-full"
+              isRequired
+              minLength={8}
+              name="password"
+              type="password"
+              validate={(value) => {
+                if (value.length < 8) {
+                  return "Password must be at least 8 characters";
+                }
+                if (!/[A-Z]/.test(value)) {
+                  return "Password must contain at least one uppercase letter";
+                }
+                if (!/[0-9]/.test(value)) {
+                  return "Password must contain at least one number";
+                }
+                return null;
+              }}
+            >
               <Label className="text-sm font-medium text-gray-700">
                 Password
               </Label>
               <Input
-                name="password"
-                type="password"
-                onChange={handleInputChange}
-                required
-                placeholder="Create a strong password"
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                placeholder="Enter your password"
+                onChange={handleInputChange}
               />
+              <Description>
+                Must be at least 8 characters with 1 uppercase and 1 number
+              </Description>
+              <FieldError />
             </TextField>
 
             <TextField className="w-full">
