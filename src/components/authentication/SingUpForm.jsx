@@ -7,7 +7,6 @@ import {
   Input,
   Select,
   ListBox,
-  Button,
   Description,
   FieldError,
 } from "@heroui/react";
@@ -90,8 +89,8 @@ const SingUpForm = () => {
           </p>
           <p className="text-sm text-gray-600 text-center">
             You have already an account?{" "}
-            <Link href="/login" className="text-blue-500 hover:underline">
-              Log in
+            <Link href="/login" className="font-medium text-lg text-[#006694] hover:underline">
+              Login
             </Link>
           </p>
         </div>
