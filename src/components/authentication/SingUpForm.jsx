@@ -9,9 +9,9 @@ import {
   ListBox,
   Button,
 } from "@heroui/react";
+import Link from "next/link";
 
 const SingUpForm = () => {
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -36,7 +36,6 @@ const SingUpForm = () => {
     setImageFile(file);
     setLoading(true);
 
-
     const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMAGE_BB_API_KEY;
     const formDataImage = new FormData();
     formDataImage.append("image", file);
@@ -58,7 +57,6 @@ const SingUpForm = () => {
         alert("Image upload failed. Try again.");
       }
     } catch (error) {
-     
       alert("Network error during image upload.");
     } finally {
       setLoading(false);
@@ -88,11 +86,16 @@ const SingUpForm = () => {
           <p className="mt-2 text-center text-sm text-gray-600">
             Join MediCare Connect platform today
           </p>
+          <p className="text-sm text-gray-600 text-center">
+            You have already an account?{" "}
+            <Link href="/login" className="text-blue-500 hover:underline">
+              Log in
+            </Link>
+          </p>
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md space-y-4">
-  
             <TextField className="w-full">
               <Label className="text-sm font-medium text-gray-700">
                 Full Name
@@ -107,7 +110,6 @@ const SingUpForm = () => {
               />
             </TextField>
 
- 
             <TextField className="w-full">
               <Label className="text-sm font-medium text-gray-700">
                 Email Address
@@ -136,7 +138,6 @@ const SingUpForm = () => {
               />
             </TextField>
 
-            {/* Phone Number Field */}
             <TextField className="w-full">
               <Label className="text-sm font-medium text-gray-700">
                 Phone Number
@@ -151,7 +152,6 @@ const SingUpForm = () => {
               />
             </TextField>
 
-            {/* Select Dropdown: Role */}
             <div>
               <Label className="text-sm font-medium text-gray-700 block mb-1">
                 User Role
@@ -190,7 +190,6 @@ const SingUpForm = () => {
               </Select>
             </div>
 
-        
             <div>
               <Label className="text-sm font-medium text-gray-700 block mb-1">
                 Gender
@@ -229,7 +228,6 @@ const SingUpForm = () => {
               </Select>
             </div>
 
- 
             <div className="flex flex-col space-y-1">
               <span className="text-sm font-medium text-gray-700">
                 Upload Profile Photo
