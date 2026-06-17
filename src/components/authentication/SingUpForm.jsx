@@ -92,7 +92,7 @@ const SingUpForm = () => {
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md space-y-4">
-            {/* Name Field */}
+  
             <TextField className="w-full">
               <Label className="text-sm font-medium text-gray-700">
                 Full Name
@@ -107,7 +107,7 @@ const SingUpForm = () => {
               />
             </TextField>
 
-            {/* Email Field */}
+ 
             <TextField className="w-full">
               <Label className="text-sm font-medium text-gray-700">
                 Email Address
@@ -122,7 +122,6 @@ const SingUpForm = () => {
               />
             </TextField>
 
-            {/* Password Field */}
             <TextField className="w-full">
               <Label className="text-sm font-medium text-gray-700">
                 Password
@@ -191,7 +190,7 @@ const SingUpForm = () => {
               </Select>
             </div>
 
-            {/* Select Dropdown: Gender */}
+        
             <div>
               <Label className="text-sm font-medium text-gray-700 block mb-1">
                 Gender
@@ -230,7 +229,7 @@ const SingUpForm = () => {
               </Select>
             </div>
 
-            {/* Photo Upload Field */}
+ 
             <div className="flex flex-col space-y-1">
               <span className="text-sm font-medium text-gray-700">
                 Upload Profile Photo
