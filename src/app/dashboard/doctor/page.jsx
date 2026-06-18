@@ -1,9 +1,10 @@
+import HomeCard from '@/components/dashboard/doctor/HomeCard';
 import React from 'react';
 
 const DoctorDashboard = () => {
     return (
         <div>
-            <h1>Doctor</h1>
+           <HomeCard/>
         </div>
     );
 };
