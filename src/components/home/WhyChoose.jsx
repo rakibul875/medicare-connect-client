@@ -136,9 +136,7 @@ const WhyChoose = () => {
           Providing a seamless healthcare journey through innovative technology
           and empathetic care.
         </p>
-      </div>
-
-    
+      </div>   
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {features.map((feature, index) => (
           <div
