@@ -6,17 +6,17 @@ import { usePathname } from "next/navigation";
 import { Avatar, Button, Dropdown, Label } from "@heroui/react";
 import { getUserSession } from "@/lib/api/getUsers";
 import { authClient } from "@/lib/auth-client";
-import { ArrowRightFromSquare, Persons } from "@gravity-ui/icons";
+import { ArrowRightFromSquare } from "@gravity-ui/icons";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  if (pathname.includes("dashboard")) {
-    return null;
-  }
 
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
+  if (pathname.includes("dashboard")) {
+    return null;
+  }
   const handelLogOut = async () => {
     await authClient.signOut();
   };
@@ -98,7 +98,7 @@ const NavBar = () => {
                     </div>
                     <Dropdown.Menu>
                       <Dropdown.Item id="dashboard" textValue="Dashboard">
-                        <Link href={`/dashboard/${user.role}`}>Dashboard</Link>
+                        <Link href={`/dashboard/${user?.role}`}>Dashboard</Link>
                       </Dropdown.Item>
                       <Dropdown.Item
                         id="logout"
