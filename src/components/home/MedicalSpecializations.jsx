@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 const MedicalSpecializations = () => {
-  // Specializations category lists array with custom lightweight SVG graphics
+  
   const specializations = [
     {
       name: "Cardiology",
@@ -113,7 +113,7 @@ const MedicalSpecializations = () => {
 
   return (
     <section className="bg-white py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Top Header Section */}
+   
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-2">
         <div>
           <h2 className="text-2xl sm:text-3xl font-bold text-[#006694] tracking-tight">
@@ -124,7 +124,7 @@ const MedicalSpecializations = () => {
           </p>
         </div>
 
-        {/* View All Redirect Link */}
+      
         <Link
           href="/specializations"
           className="inline-flex items-center space-x-1 text-sm font-bold text-[#006694] hover:text-[#00557c] transition-colors group self-start sm:self-center"
@@ -147,19 +147,17 @@ const MedicalSpecializations = () => {
         </Link>
       </div>
 
-      {/* Grid Display Grid System */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
         {specializations.map((item, idx) => (
           <div
             key={idx}
-            className="bg-white rounded-2xl border border-gray-100 p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
+            className="bg-gray-200 rounded-2xl border border-gray-100 p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
           >
-            {/* Rounded Icon Background Box wrapper */}
+       
             <div className="bg-[#006694]/5 text-[#006694] p-4 rounded-2xl mb-4 group-hover:bg-[#006694] group-hover:text-white transition-colors duration-300">
               {item.icon}
             </div>
 
-            {/* Categorized Label Name */}
             <span className="text-sm font-bold text-gray-800 tracking-tight group-hover:text-[#006694] transition-colors">
               {item.name}
             </span>

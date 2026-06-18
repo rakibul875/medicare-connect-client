@@ -1,7 +1,7 @@
 import React from "react";
 
 const WhyChoose = () => {
-  // Features dataset matching image_ef0568.png exactly
+
   const features = [
     {
       title: "Secure Records",
@@ -127,7 +127,7 @@ const WhyChoose = () => {
 
   return (
     <section className="bg-white py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Title & Description Headers */}
+    
       <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
         <h2 className="text-3xl sm:text-4xl font-bold text-[#006694] tracking-tight">
           Clinical Excellence, Digital Calm
@@ -138,25 +138,25 @@ const WhyChoose = () => {
         </p>
       </div>
 
-      {/* Responsive Grid Structure (3 Columns on Large Screen, 1 on Mobile) */}
+    
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {features.map((feature, index) => (
           <div
             key={index}
-            className="bg-white rounded-[2rem] border border-gray-100 p-8 flex flex-col items-start justify-between shadow-sm hover:shadow-md transition-all duration-300 group"
+            className="bg-gray-200 rounded-[2rem] border border-gray-100 p-8 flex flex-col items-start justify-between shadow-sm hover:shadow-md transition-all duration-300 group"
           >
             <div>
-              {/* Soft Tint Circular/Square Icon Wrap Box */}
+           
               <div className="bg-[#006694]/5 text-[#006694] p-3.5 rounded-2xl mb-6 inline-block group-hover:bg-[#006694] group-hover:text-white transition-colors duration-300">
                 {feature.icon}
               </div>
 
-              {/* Card Main Header Label */}
+           
               <h3 className="text-lg font-bold text-gray-900 tracking-tight mb-3">
                 {feature.title}
               </h3>
 
-              {/* Feature Text Info Blocks */}
+              
               <p className="text-gray-500 text-sm font-medium leading-relaxed">
                 {feature.desc}
               </p>
