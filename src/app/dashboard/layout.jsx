@@ -1,16 +1,14 @@
-import AddScheduleForm from '@/components/shear/AddScheduleForm';
+import SideBare from "@/components/dashboard/SideBare";
+import React from "react";
 
-import React from 'react';
+const DashboardLayout = ({ children }) => {
+  return (
+    <div className="flex flex-col lg:flex-row min-h-screen gap-5">
+      <SideBare />
 
-const DashboardLayout = ({children}) => {
-    return (
-        <div>
-            <div className="">
-                <AddScheduleForm/>
-            </div>
-            <main>{children}</main>
-        </div>
-    );
+      <main className="flex-1">{children}</main>
+    </div>
+  );
 };
 
 export default DashboardLayout;
