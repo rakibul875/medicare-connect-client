@@ -7,42 +7,25 @@ import {
   Briefcase,
   DollarSign,
   Building,
-  Calendar,
-  Clock,
   Image,
   Plus,
   CheckCircle,
   ShieldAlert,
+  Edit,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { doctorProfile } from "@/lib/post/doctor-profile";
 
-export default function ProfileForm({ doctor, doctorId }) {
+export default function ProfileForm({ doctorId, doctor, onSaveProfile }) {
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
+  // বর্তমান ডক্টর প্রোফাইলের স্টেট
   const [currentDoctor, setCurrentDoctor] = useState(doctor);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isOpenForm, setIsOpenForm] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [isUploading, setIsUploading] = useState(false);
-  const [selectedDays, setSelectedDays] = useState(doctor?.availableDays || []);
-  const [selectedSlots, setSelectedSlots] = useState(doctor?.availableSlots || []);
-
-  const weekDays = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-
-  const timeSlots = [
-    "09:00 AM - 12:00 PM",
-    "02:00 PM - 05:00 PM",
-    "06:00 PM - 09:00 PM",
-  ];
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -74,18 +57,6 @@ export default function ProfileForm({ doctor, doctorId }) {
     }
   };
 
-  const handleDayToggle = (day) => {
-    setSelectedDays((prev) =>
-      prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day],
-    );
-  };
-
-  const handleSlotToggle = (slot) => {
-    setSelectedSlots((prev) =>
-      prev.includes(slot) ? prev.filter((s) => s !== slot) : [...prev, slot],
-    );
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -97,23 +68,135 @@ export default function ProfileForm({ doctor, doctorId }) {
       experience: formData.get("experience"),
       consultationFee: formData.get("consultationFee"),
       hospitalName: formData.get("hospitalName"),
-      profileImage: imageUrl || (currentDoctor ? currentDoctor.profileImage : ""),
-      availableDays: selectedDays,
-      availableSlots: selectedSlots,
-      verificationStatus: currentDoctor && currentDoctor.verificationStatus ? currentDoctor.verificationStatus : "Pending",
+      profileImage: imageUrl,
+      verificationStatus: "Pending",
       doctorId: user?.id || doctorId,
     };
 
-    setCurrentDoctor(newDoctorData);
     const res = await doctorProfile(newDoctorData);
     if (res?.insertedId) {
       alert("Submit Successful");
+      setCurrentDoctor(newDoctorData); // সাবমিট শেষে প্রোফাইল ভিউতে নিয়ে যাওয়ার জন্য
+      setIsSubmitted(true);
     }
-    setIsEditing(false);
+
+    if (onSaveProfile) {
+      await onSaveProfile(newDoctorData);
+    }
   };
 
+  // ১. প্রোফাইল তৈরি হয়ে গেলে সাকসেস মেসেজ দেখাবে
+  if (isSubmitted) {
+    return (
+      <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+        <div className="bg-gradient-to-br from-[#f8fafc] to-white rounded-[2rem] border border-gray-100 p-12 text-center space-y-4 shadow-sm">
+          <div className="bg-green-50 text-green-600 p-4 rounded-full inline-block">
+            <CheckCircle className="w-8 h-8" />
+          </div>
+          <h3 className="text-xl font-bold text-gray-800">
+            Profile Created Successfully
+          </h3>
+          <p className="text-gray-500 text-sm max-w-sm mx-auto font-medium">
+            Your healthcare provider details have been submitted and are
+            currently pending verification.
+          </p>
+          <button
+            onClick={() => {
+              setIsSubmitted(false);
+              setIsOpenForm(false);
+            }}
+            className="mt-2 bg-[#006694] text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#00557c] transition-colors"
+          >
+            View Profile Info
+          </button>
+        </div>
+      </div>
+    );
+  }
 
-  if ((!currentDoctor || Object.keys(currentDoctor).length === 0) && !isEditing) {
+  // ২. যদি ডক্টর প্রোফাইল ইতিমধ্যে থেকে থাকে, তবে তার ইনফো দেখাবে
+  if (currentDoctor && Object.keys(currentDoctor).length > 0) {
+    return (
+      <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+        <div className="bg-white rounded-[2rem] border border-gray-100 p-8 shadow-sm space-y-6">
+          <div className="flex justify-between">
+            <div className="flex flex-col sm:flex-row items-center gap-6 pb-6 border-b border-gray-100">
+              <div className="relative w-24 h-24 rounded-2xl bg-gray-100 overflow-hidden border border-gray-200">
+                {currentDoctor.profileImage ? (
+                  <img
+                    src={currentDoctor.profileImage}
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-gray-400">
+                    <User className="w-8 h-8" />
+                  </div>
+                )}
+              </div>
+              <div className="text-center sm:text-left space-y-1">
+                <h2 className="text-2xl font-bold text-gray-900">
+                  {currentDoctor.doctorName}
+                </h2>
+                <p className="text-sm font-semibold text-[#006694]">
+                  {currentDoctor.specialization}
+                </p>
+                <div className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 mt-1">
+                  <ShieldAlert className="w-3.5 h-3.5" />
+                  <span>
+                    Verification:{" "}
+                    {currentDoctor.verificationStatus || "Pending"}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="">
+              <button
+                type="button"
+                className="inline-flex items-center gap-2 border border-gray-200 bg-white text-gray-700 font-bold px-4 py-2.5 rounded-xl shadow-sm text-sm opacity-80 cursor-default"
+              >
+                <Edit className="w-4 h-4 text-gray-500" />
+                <span>Update Profile</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm font-medium text-gray-700">
+            <div className="p-4 bg-slate-50 rounded-xl">
+              <span className="text-xs text-gray-400 block uppercase">
+                Qualifications
+              </span>
+              {currentDoctor.qualifications}
+            </div>
+            <div className="p-4 bg-slate-50 rounded-xl">
+              <span className="text-xs text-gray-400 block uppercase">
+                Experience
+              </span>
+              {currentDoctor.experience} Years
+            </div>
+            <div className="p-4 bg-slate-50 rounded-xl">
+              <span className="text-xs text-gray-400 block uppercase">
+                Consultation Fee
+              </span>
+              {currentDoctor.consultationFee
+                ? `$${currentDoctor.consultationFee}`
+                : "N/A"}
+            </div>
+          </div>
+
+          <div className="p-4 bg-slate-50 rounded-xl text-sm font-medium text-gray-700">
+            <span className="text-xs text-gray-400 block uppercase">
+              Hospital Affiliation
+            </span>
+            {currentDoctor.hospitalName}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ৩. যদি প্রোফাইল না থাকে এবং ফর্মও ওপেন না করা হয়, তবে শুধু বাটন দেখাবে
+  if (!isOpenForm) {
     return (
       <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
         <div className="bg-gradient-to-br from-[#f8fafc] to-white rounded-[2rem] border border-gray-100 p-12 text-center space-y-4 shadow-sm">
@@ -124,16 +207,11 @@ export default function ProfileForm({ doctor, doctorId }) {
             No Doctor Profile Found
           </h3>
           <p className="text-gray-500 text-sm max-w-sm mx-auto font-medium">
-            Please set up your healthcare provider details to activate client
-            scheduling panels.
+            Please set up your healthcare provider details to complete your
+            registration.
           </p>
           <button
-            onClick={() => {
-              setSelectedDays([]);
-              setSelectedSlots([]);
-              setImageUrl("");
-              setIsEditing(true);
-            }}
+            onClick={() => setIsOpenForm(true)}
             className="inline-flex items-center gap-2 bg-[#149ddd] hover:bg-[#1080b5] text-white font-bold px-6 py-3.5 rounded-xl shadow-md transition-all active:scale-[0.99]"
           >
             <Plus className="w-4 h-4" strokeWidth={3} />
@@ -144,71 +222,7 @@ export default function ProfileForm({ doctor, doctorId }) {
     );
   }
 
-  if (currentDoctor && !isEditing) {
-    return (
-      <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
-        <div className="bg-white rounded-[2rem] border border-gray-100 p-8 shadow-sm space-y-6">
-          <div className="flex flex-col sm:flex-row items-center gap-6 pb-6 border-b border-gray-100">
-            <div className="relative w-24 h-24 rounded-2xl bg-gray-100 overflow-hidden border border-gray-200">
-              {currentDoctor.profileImage ? (
-                <img
-                  src={currentDoctor.profileImage}
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-gray-400">
-                  <User className="w-8 h-8" />
-                </div>
-              )}
-            </div>
-            <div className="text-center sm:text-left space-y-1">
-              <h2 className="text-2xl font-bold text-gray-900">
-                {currentDoctor.doctorName}
-              </h2>
-              <p className="text-sm font-semibold text-[#006694]">
-                {currentDoctor.specialization}
-              </p>
-              <div className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 mt-1">
-                <ShieldAlert className="w-3.5 h-3.5" />
-                <span>Verification: {currentDoctor.verificationStatus}</span>
-              </div>
-            </div>
-          </div>
-
-         
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm font-medium text-gray-700">
-            <div className="p-4 bg-slate-50 rounded-xl">
-              <span className="text-xs text-gray-400 block uppercase">Qualifications</span>
-              {currentDoctor.qualifications}
-            </div>
-            <div className="p-4 bg-slate-50 rounded-xl">
-              <span className="text-xs text-gray-400 block uppercase">Experience</span>
-              {currentDoctor.experience} Years
-            </div>
-            <div className="p-4 bg-slate-50 rounded-xl">
-              <span className="text-xs text-gray-400 block uppercase">Consultation Fee</span>
-              ${currentDoctor.consultationFee}
-            </div>
-          </div>
-
-          <button
-            onClick={() => {
-              setImageUrl(currentDoctor.profileImage || "");
-              setSelectedDays(currentDoctor.availableDays || []);
-              setSelectedSlots(currentDoctor.availableSlots || []);
-              setIsEditing(true);
-            }}
-            className="bg-[#006694] text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#00557c] transition-colors"
-          >
-            Edit Medical Profile Details
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-
+  // ৪. প্রোফাইল না থাকলে এবং বাটনে ক্লিক করার পর ক্রিয়েট ফর্ম ভিউ
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
       <form
@@ -217,7 +231,7 @@ export default function ProfileForm({ doctor, doctorId }) {
       >
         <div>
           <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
-            {currentDoctor ? "Update Provider Credentials" : "Setup Provider Credentials"}
+            Setup Provider Credentials
           </h2>
           <p className="text-sm text-gray-500 mt-1 font-medium">
             Complete fields explicitly matching corporate platform registry.
@@ -235,7 +249,6 @@ export default function ProfileForm({ doctor, doctorId }) {
                 required
                 type="text"
                 name="doctorName"
-                defaultValue={currentDoctor?.doctorName || ""}
                 placeholder="e.g. Dr. Sarah Chen"
                 className="w-full bg-[#f1f5f9]/60 border border-gray-200 rounded-xl py-3 pl-11 pr-4 text-sm font-semibold text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#149ddd]/40 transition-all"
               />
@@ -248,7 +261,7 @@ export default function ProfileForm({ doctor, doctorId }) {
             </label>
             <select
               name="specialization"
-              defaultValue={currentDoctor?.specialization || "Cardiology"}
+              defaultValue="Cardiology"
               className="w-full bg-[#f1f5f9]/60 border border-gray-200 rounded-xl py-3 px-4 text-sm font-semibold text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#149ddd]/40 transition-all"
             >
               <option value="Cardiology">Cardiology</option>
@@ -269,7 +282,6 @@ export default function ProfileForm({ doctor, doctorId }) {
                 required
                 type="text"
                 name="qualifications"
-                defaultValue={currentDoctor?.qualifications || ""}
                 placeholder="e.g. MBBS, FCPS"
                 className="w-full bg-[#f1f5f9]/60 border border-gray-200 rounded-xl py-3 pl-11 pr-4 text-sm font-semibold text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#149ddd]/40 transition-all"
               />
@@ -286,7 +298,6 @@ export default function ProfileForm({ doctor, doctorId }) {
                 required
                 type="number"
                 name="experience"
-                defaultValue={currentDoctor?.experience || ""}
                 placeholder="e.g. 10"
                 className="w-full bg-[#f1f5f9]/60 border border-gray-200 rounded-xl py-3 pl-11 pr-4 text-sm font-semibold text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#149ddd]/40 transition-all"
               />
@@ -303,7 +314,6 @@ export default function ProfileForm({ doctor, doctorId }) {
                 required
                 type="number"
                 name="consultationFee"
-                defaultValue={currentDoctor?.consultationFee || ""}
                 placeholder="e.g. 150"
                 className="w-full bg-[#f1f5f9]/60 border border-gray-200 rounded-xl py-3 pl-11 pr-4 text-sm font-semibold text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#149ddd]/40 transition-all"
               />
@@ -320,7 +330,6 @@ export default function ProfileForm({ doctor, doctorId }) {
                 required
                 type="text"
                 name="hospitalName"
-                defaultValue={currentDoctor?.hospitalName || ""}
                 placeholder="e.g. Metro Health Hospital"
                 className="w-full bg-[#f1f5f9]/60 border border-gray-200 rounded-xl py-3 pl-11 pr-4 text-sm font-semibold text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#149ddd]/40 transition-all"
               />
@@ -346,9 +355,7 @@ export default function ProfileForm({ doctor, doctorId }) {
               className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 px-4 py-2.5 rounded-xl text-sm font-semibold cursor-pointer shadow-sm inline-flex items-center gap-2 transition-all"
             >
               <Image className="w-4 h-4 text-gray-400" />
-              <span>
-                {isUploading ? "Uploading..." : "Choose Image File"}
-              </span>
+              <span>{isUploading ? "Uploading..." : "Choose Image File"}</span>
             </label>
             {imageUrl && (
               <span className="text-xs text-green-600 font-medium flex items-center gap-1">
@@ -358,65 +365,20 @@ export default function ProfileForm({ doctor, doctorId }) {
           </div>
         </div>
 
-        <div className="space-y-3">
-          <label className="text-xs font-bold text-gray-500 uppercase tracking-wide flex items-center gap-1">
-            <Calendar className="w-4 h-4" /> Available Days
-          </label>
-          <div className="flex flex-wrap gap-2">
-            {weekDays.map((day) => {
-              const isChecked = selectedDays.includes(day);
-              return (
-                <button
-                  type="button"
-                  key={day}
-                  onClick={() => handleDayToggle(day)}
-                  className={`px-4 py-2 text-xs font-bold rounded-xl transition-all border ${isChecked ? "bg-[#006694] border-[#006694] text-white" : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"}`}
-                >
-                  {day}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          <label className="text-xs font-bold text-gray-500 uppercase tracking-wide flex items-center gap-1">
-            <Clock className="w-4 h-4" /> Available Slots
-          </label>
-          <div className="flex flex-wrap gap-2">
-            {timeSlots.map((slot) => {
-              const isChecked = selectedSlots.includes(slot);
-              return (
-                <button
-                  type="button"
-                  key={slot}
-                  onClick={() => handleSlotToggle(slot)}
-                  className={`px-4 py-2 text-xs font-bold rounded-xl transition-all border ${isChecked ? "bg-[#006694] border-[#006694] text-white" : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"}`}
-                >
-                  {slot}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-
         <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
-          {currentDoctor && (
-            <button
-              type="button"
-              onClick={() => setIsEditing(false)}
-              className="border border-gray-200 bg-transparent text-gray-500 hover:bg-gray-50 font-semibold rounded-xl px-5 py-2.5 text-sm"
-            >
-              Cancel
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => setIsOpenForm(false)}
+            className="border border-gray-200 bg-transparent text-gray-500 hover:bg-gray-50 font-semibold rounded-xl px-5 py-2.5 text-sm"
+          >
+            Cancel
+          </button>
           <button
             type="submit"
             disabled={isUploading}
             className={`bg-[#006694] text-white font-semibold rounded-xl px-6 py-2.5 text-sm ${isUploading ? "opacity-50 cursor-not-allowed" : "hover:bg-[#00557c]"}`}
           >
-            {currentDoctor ? "Save Updates" : "Create Profile"}
+            Create Profile
           </button>
         </div>
       </form>
