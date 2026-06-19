@@ -1,9 +1,10 @@
+import ProfileForm from '@/components/dashboard/doctor/ProfileForm';
 import React from 'react';
 
 const ProfilePage = () => {
     return (
         <div>
-            
+            <ProfileForm/>
         </div>
     );
 };
