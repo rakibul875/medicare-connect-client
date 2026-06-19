@@ -2,7 +2,7 @@ import React from "react";
 import { Calendar, Users, DollarSign, Star } from "lucide-react";
 
 const HomeCard = () => {
-  // Dynamic card data matching image_916ce7.png layout
+
   const analyticsData = [
     {
       title: "TODAY'S VISITS",
@@ -39,7 +39,7 @@ const HomeCard = () => {
 
   return (
     <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8 bg-white">
-      {/* Top Welcome / Greeting Section */}
+  
       <div className="space-y-1">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
           Morning, Sarah.
@@ -51,14 +51,14 @@ const HomeCard = () => {
         </p>
       </div>
 
-      {/* Analytics Responsive Grid System */}
+     
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {analyticsData.map((data, index) => (
           <div
             key={index}
-            className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[160px]"
+            className="bg-gray-100 border border-gray-100 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[160px]"
           >
-            {/* Upper row: Icon & Status Badge */}
+       
             <div className="flex items-center justify-between w-full">
               <div
                 className={`${data.iconBg} p-3 rounded-2xl flex items-center justify-center`}
@@ -66,7 +66,7 @@ const HomeCard = () => {
                 {data.icon}
               </div>
 
-              {/* Conditional Indicator Badge rendering */}
+    
               {data.change && (
                 <span className="text-[11px] font-bold text-[#014d34] bg-[#014d34]/5 px-2.5 py-1 rounded-lg">
                   {data.change}
@@ -79,7 +79,7 @@ const HomeCard = () => {
               )}
             </div>
 
-            {/* Lower row: Metadata & Figures */}
+
             <div className="mt-5 space-y-1">
               <span className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider">
                 {data.title}
