@@ -15,6 +15,7 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import { doctorProfile } from "@/lib/post/doctor-profile";
 
 
 const ProfileForm = () => {
@@ -108,13 +109,16 @@ const ProfileForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
-    const Data = {
+    const data = {
       ...formData,
       doctorId: user?.id,
     };
-    console.log(Data)
+    const res= await doctorProfile(data)
+     if(res.insertedId){
+        alert("Submit SuccessFul")
+    }
     setHasProfile(true);
     setIsFormOpen(false);
   };
