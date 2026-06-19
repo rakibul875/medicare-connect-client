@@ -15,12 +15,13 @@ import {
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { doctorProfile } from "@/lib/post/doctor-profile";
+import DoctorCreateForm from "./DoctorCreateForm";
 
 export default function ProfileForm({ doctorId, doctor, onSaveProfile }) {
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
-  // বর্তমান ডক্টর প্রোফাইলের স্টেট
+  
   const [currentDoctor, setCurrentDoctor] = useState(doctor);
   const [isOpenForm, setIsOpenForm] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
@@ -76,7 +77,7 @@ export default function ProfileForm({ doctorId, doctor, onSaveProfile }) {
     const res = await doctorProfile(newDoctorData);
     if (res?.insertedId) {
       alert("Submit Successful");
-      setCurrentDoctor(newDoctorData); // সাবমিট শেষে প্রোফাইল ভিউতে নিয়ে যাওয়ার জন্য
+      setCurrentDoctor(newDoctorData); 
       setIsSubmitted(true);
     }
 
@@ -85,7 +86,7 @@ export default function ProfileForm({ doctorId, doctor, onSaveProfile }) {
     }
   };
 
-  // ১. প্রোফাইল তৈরি হয়ে গেলে সাকসেস মেসেজ দেখাবে
+
   if (isSubmitted) {
     return (
       <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
@@ -114,7 +115,7 @@ export default function ProfileForm({ doctorId, doctor, onSaveProfile }) {
     );
   }
 
-  // ২. যদি ডক্টর প্রোফাইল ইতিমধ্যে থেকে থাকে, তবে তার ইনফো দেখাবে
+
   if (currentDoctor && Object.keys(currentDoctor).length > 0) {
     return (
       <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
@@ -151,13 +152,7 @@ export default function ProfileForm({ doctorId, doctor, onSaveProfile }) {
               </div>
             </div>
             <div className="">
-              <button
-                type="button"
-                className="inline-flex items-center gap-2 border border-gray-200 bg-white text-gray-700 font-bold px-4 py-2.5 rounded-xl shadow-sm text-sm opacity-80 cursor-default"
-              >
-                <Edit className="w-4 h-4 text-gray-500" />
-                <span>Update Profile</span>
-              </button>
+                <DoctorCreateForm doctor={doctor}/>
             </div>
           </div>
 
@@ -195,7 +190,7 @@ export default function ProfileForm({ doctorId, doctor, onSaveProfile }) {
     );
   }
 
-  // ৩. যদি প্রোফাইল না থাকে এবং ফর্মও ওপেন না করা হয়, তবে শুধু বাটন দেখাবে
+
   if (!isOpenForm) {
     return (
       <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
@@ -222,7 +217,6 @@ export default function ProfileForm({ doctorId, doctor, onSaveProfile }) {
     );
   }
 
-  // ৪. প্রোফাইল না থাকলে এবং বাটনে ক্লিক করার পর ক্রিয়েট ফর্ম ভিউ
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
       <form

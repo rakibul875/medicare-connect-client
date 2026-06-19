@@ -23,7 +23,9 @@ const LoginForm = () => {
         alert('sinIn successful')
     }
     else{
+        console.log("error",error.message)
         alert(error.message)
+        
     }
   };
 

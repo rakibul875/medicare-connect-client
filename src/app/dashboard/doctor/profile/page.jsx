@@ -7,7 +7,6 @@ const ProfilePage = async() => {
     const user= await getUserSession()
     const doctorId= user?.id
     const doctor= await doctorProfile(doctorId)
-    console.log(doctor)
     return (
         <div>
             <ProfileForm doctor={doctor} doctorId={doctorId}/>
