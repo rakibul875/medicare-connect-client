@@ -1,3 +1,4 @@
+import DoctorBookingCard from "@/components/DoctorBookingCard";
 import DoctorDetailsCard from "@/components/DoctorDetailsCard";
 import { getDoctorById } from "@/lib/api/getDoctor";
 import React from "react";
@@ -5,11 +6,12 @@ import React from "react";
 const DoctorDetails = async ({ params }) => {
   const { id } = await params;
   const doctor = await getDoctorById(id);
-  console.log(doctor);
+  const doctorId=doctor.doctorId
   return (
     <div className="container mx-auto">
-      <div className="">
+      <div className="flex flex-col lg:flex-row mx-0 sm:mx-auto">
         <DoctorDetailsCard doctor={doctor} />
+        <DoctorBookingCard doctorId={doctorId}/>
       </div>
     </div>
   );
