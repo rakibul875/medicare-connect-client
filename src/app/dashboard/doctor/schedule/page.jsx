@@ -1,7 +1,8 @@
 import AddScheduleForm from "@/components/dashboard/doctor/AddScheduleForm";
-import { getDoctor } from "@/lib/api/getDoctor";
+import ScheduleTable from "@/components/dashboard/doctor/ScheduleTable";
+import { getDoctorSchedule } from "@/lib/api/getDoctorSchedule";
 import { getUserSession } from "@/lib/api/getUsers";
-import { redirect } from "next/navigation";
+
 import React from "react";
 
 const Schedule = async () => {
@@ -10,11 +11,13 @@ const Schedule = async () => {
     return;
   }
   const doctorId=user?.id
-  console.log('doctorId',doctorId)
+  const schedules= await getDoctorSchedule(doctorId)
+  console.log(schedules)
 
   return (
     <div>
       <AddScheduleForm doctorId={doctorId} />
+      <ScheduleTable schedules={schedules}/>
     </div>
   );
 };
