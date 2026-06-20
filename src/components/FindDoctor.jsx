@@ -97,7 +97,7 @@ const FindDoctor = ({ doctor }) => {
         </div>
 
         <Link
-          href={`/appointments/book/${_id}`}
+          href={`/find-doctors/${_id}`}
           className="bg-[#006694] hover:bg-[#00557c] text-white font-bold text-sm px-6 py-3 rounded-xl transition-all shadow-sm active:scale-[0.98] text-center"
         >
           Book Appointment
