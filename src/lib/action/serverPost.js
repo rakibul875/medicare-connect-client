@@ -9,3 +9,13 @@ export const handelPost = async (path, newData, method = "POST") => {
   });
   return res.json();
 }
+
+export const dataDelete=async(path)=>{
+  const res= await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}${path}`,{
+    method:'DELETE',
+    headers:{
+      "Content-type": "application/json",
+    }
+  })
+  return res.json()
+}

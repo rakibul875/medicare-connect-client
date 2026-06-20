@@ -1,5 +1,6 @@
 import React from "react";
-import { Pencil, Trash2, Clock } from "lucide-react";
+import { Pencil, Clock } from "lucide-react";
+import ScheduleDelete from "./ScheduleDelete";
 
 const ScheduleTable = ({ schedules }) => {
   return (
@@ -46,19 +47,15 @@ const ScheduleTable = ({ schedules }) => {
                     <div className="flex items-center justify-end space-x-1 sm:space-x-2">
                       <button
                         type="button"
-                        className="text-gray-400 hover:text-[#006694] p-1.5 sm:p-2 rounded-xl hover:bg-gray-50 transition-all active:scale-95"
+                        className="text-gray-400 hover:text-[#006694] p-1.5 sm:p-2 rounded-xl hover:bg-gray-50 transition-all active:scale-95 cursor-pointer"
                         title="Edit Slot"
                       >
                         <Pencil className="w-3.5 h-3.5 sm:w-4 h-4" />
                       </button>
-
-                      <button
-                        type="button"
-                        className="text-gray-400 hover:text-red-500 p-1.5 sm:p-2 rounded-xl hover:bg-red-50 transition-all active:scale-95"
-                        title="Delete Slot"
-                      >
-                        <Trash2 className="w-3.5 h-3.5 sm:w-4 h-4" />
-                      </button>
+                      <ScheduleDelete
+                        doctorId={schedule.doctorId}
+                        day={schedule.day}
+                      />
                     </div>
                   </td>
                 </tr>
