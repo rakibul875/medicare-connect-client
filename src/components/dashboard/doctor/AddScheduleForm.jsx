@@ -1,12 +1,25 @@
 "use client";
 
 import React, { useState } from "react";
-import { Calendar, Clock, Plus, Save } from "lucide-react";
+import { Clock, Plus, Save } from "lucide-react";
+import { handelScheduleList } from "@/lib/post/doctorSchedule";
 
-const AddScheduleForm = () => {
-  const [appointmentDate, setAppointmentDate] = useState("2026-06-19");
+const AddScheduleForm = ({ doctorId }) => {
+ console.log(doctorId)
+  const [selectedDays, setSelectedDays] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
   const [slotsList, setSlotsList] = useState([]);
+
+  const daysOfWeek = [
+    "Saturday",
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+  ];
+
   const availableHours = [
     "09:00 AM - 10:00 AM",
     "10:00 AM - 11:00 AM",
@@ -15,7 +28,19 @@ const AddScheduleForm = () => {
     "04:00 PM - 05:00 PM",
   ];
 
+  const handleDayToggle = (day) => {
+    if (selectedDays.includes(day)) {
+      setSelectedDays(selectedDays.filter((d) => d !== day));
+    } else {
+      setSelectedDays([...selectedDays, day]);
+    }
+  };
+
   const handleAddSlot = () => {
+    if (selectedDays.length === 0) {
+      alert("Please select at least one day first!");
+      return;
+    }
     if (!selectedTime) {
       alert("Please select a valid time slot first!");
       return;
@@ -27,13 +52,36 @@ const AddScheduleForm = () => {
     setSlotsList([...slotsList, selectedTime]);
   };
 
-  const handleSaveSchedule = () => {
-    const schedule = {
-      date: appointmentDate,
+  const handleSaveSchedule = async () => {
+    if (selectedDays.length === 0) {
+      alert("Please select at least one day!");
+      return;
+    }
+    if (slotsList.length === 0) {
+      alert("Please add at least one time slot before saving!");
+      return;
+    }
+
+    const formattedScheduleList = selectedDays.map((day) => ({
+      doctorId: doctorId,
+      day: day,
       slots: slotsList,
-    };
-    console.log(schedule);
-    alert("Schedule saved successfully!");
+    }));
+    
+
+    const res = await handelScheduleList(formattedScheduleList);
+    if (res.success === false) {
+      alert(res.message);
+    } else if (res.insertedCount > 0) {
+      alert("Schedule Added successfully!");
+      setSelectedDays([]);
+      setSlotsList([]);
+      setSelectedTime("");
+    }
+
+    setSelectedDays([]);
+    setSlotsList([]);
+    setSelectedTime("");
   };
 
   const handleRemoveSlot = (indexToRemove) => {
@@ -44,26 +92,36 @@ const AddScheduleForm = () => {
     <div className="bg-white rounded-[2rem] border border-gray-100 p-8 max-w-2xl mx-auto shadow-sm my-8">
       <div className="text-center mb-8 space-y-2">
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
-          Add Schedule
+          Add Custom Schedule
         </h2>
         <p className="text-gray-500 text-xs sm:text-sm font-medium">
-          Select your available consultation date and time slots.
+          Select multiple days and time slots to create your schedule.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+      <div className="space-y-6 mb-8">
         <div className="space-y-2">
           <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider">
-            Appointment Date
+            Select Days (Multiple choice)
           </label>
-          <div className="relative">
-            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-            <input
-              type="date"
-              value={appointmentDate}
-              onChange={(e) => setAppointmentDate(e.target.value)}
-              className="w-full bg-[#f1f5f9]/60 border border-gray-200/80 rounded-xl py-3 pl-11 pr-4 text-sm font-semibold text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#149ddd]/40 transition-all"
-            />
+          <div className="flex flex-wrap gap-2 pt-1">
+            {daysOfWeek.map((day, idx) => {
+              const isSelected = selectedDays.includes(day);
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => handleDayToggle(day)}
+                  className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer ${
+                    isSelected
+                      ? "bg-[#149ddd] text-white border-[#149ddd] shadow-sm shadow-[#149ddd]/20"
+                      : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
+                  }`}
+                >
+                  {day}
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -108,7 +166,7 @@ const AddScheduleForm = () => {
       {slotsList.length > 0 && (
         <div className="mb-8 p-4 bg-gray-50/50 rounded-xl border border-dashed border-gray-200">
           <h4 className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">
-            Selected Slots:
+            Selected Slots for: {selectedDays.join(", ")}
           </h4>
           <div className="flex flex-wrap gap-2">
             {slotsList.map((slot, index) => (
