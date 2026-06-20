@@ -1,6 +1,7 @@
 import React from "react";
 import { Pencil, Clock } from "lucide-react";
 import ScheduleDelete from "./ScheduleDelete";
+import UpdateScheduleForm from "./UpdateScheduleForm";
 
 const ScheduleTable = ({ schedules }) => {
   return (
@@ -45,13 +46,7 @@ const ScheduleTable = ({ schedules }) => {
 
                   <td className="py-4 px-4 sm:px-6 text-right">
                     <div className="flex items-center justify-end space-x-1 sm:space-x-2">
-                      <button
-                        type="button"
-                        className="text-gray-400 hover:text-[#006694] p-1.5 sm:p-2 rounded-xl hover:bg-gray-50 transition-all active:scale-95 cursor-pointer"
-                        title="Edit Slot"
-                      >
-                        <Pencil className="w-3.5 h-3.5 sm:w-4 h-4" />
-                      </button>
+                      <UpdateScheduleForm day={schedule.day} schedule={schedule} />
                       <ScheduleDelete
                         doctorId={schedule.doctorId}
                         day={schedule.day}
