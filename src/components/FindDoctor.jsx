@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Briefcase, CheckCircle2, Star } from "lucide-react";
 
 const FindDoctor = ({ doctor }) => {
+  console.log("console Form find doctor",doctor)
   // Destructuring properties with fallback values from the data structure
   const {
     _id,
