@@ -3,7 +3,7 @@ import React from "react";
 import BookingFormClient from "./BookingFormClient";
 
 
-const DoctorBookingCard = async ({ doctorId }) => {
+const DoctorBookingCard = async ({ doctorId,doctor }) => {
   const doctorSchedule = await getDoctorSchedule(doctorId);
 
   
@@ -59,7 +59,7 @@ const DoctorBookingCard = async ({ doctorId }) => {
           Select your available consultation date and time slots.
         </p>
       </div>
-      <BookingFormClient schedules={processedSchedules} />
+      <BookingFormClient schedules={processedSchedules} doctor={doctor} />
     </div>
   );
 };

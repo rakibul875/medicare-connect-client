@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Calendar, Clock, ChevronDown } from "lucide-react";
 
-const BookingFormClient = ({ schedules }) => {
+const BookingFormClient = ({ schedules, doctor }) => {
   const [selectedDateObj, setSelectedDateObj] = useState(schedules[0] || null);
   const [selectedSlot, setSelectedSlot] = useState(
     schedules[0]?.slots?.[0] || "",
@@ -98,12 +98,17 @@ const BookingFormClient = ({ schedules }) => {
       </div>
 
       <div className="pt-4 flex justify-end">
-        <button
-          type="submit"
-          className="w-full sm:w-auto min-w-[160px] bg-[#006694] hover:bg-[#00557c] text-white font-bold text-sm tracking-wide px-8 py-4 rounded-xl transition-all shadow-md shadow-[#006694]/10 hover:shadow-lg hover:shadow-[#006694]/20 active:scale-[0.98] text-center"
-        >
-          Book Now
-        </button>
+        <form action="/api/checkout_sessions" method="POST">
+          <input name="amount" value={doctor.consultationFee} />
+          <input name="doctorId" value={doctor.doctorId} />
+          <input name="doctorName" value={doctor.doctorName} />
+          <button
+            type="submit"
+            className="w-full sm:w-auto min-w-[160px] bg-[#006694] hover:bg-[#00557c] text-white font-bold text-sm tracking-wide px-8 py-4 rounded-xl transition-all shadow-md shadow-[#006694]/10 hover:shadow-lg hover:shadow-[#006694]/20 active:scale-[0.98] text-center"
+          >
+            Book Now
+          </button>
+        </form>
       </div>
     </form>
   );
