@@ -9,6 +9,9 @@ export async function POST(request) {
   const amount = formData.get("amount");
   const doctorId = formData.get("doctorId");
   const doctorName = formData.get("doctorName");
+  // const bookingPayload=formData.get('bookingPayload')
+  const bookingPayload = JSON.parse(formData.get("bookingPayload"));
+
   try {
     const headersList = await headers();
     const origin = headersList.get("origin");
@@ -31,6 +34,11 @@ export async function POST(request) {
         doctorId: doctorId,
         amount: Number(amount),
         doctorName: doctorName,
+        doctorId: bookingPayload.doctorId,
+        scheduleId: bookingPayload.scheduleId,
+        date: bookingPayload.date,
+        timeSlot: bookingPayload.timeSlot,
+        doctorName: bookingPayload.doctorName,
       },
       mode: "payment",
       success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
