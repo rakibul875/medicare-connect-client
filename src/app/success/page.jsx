@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
-
 import { stripe } from '../../lib/stripe'
+import { metadata } from '../layout'
+
 
 export default async function Success({ searchParams }) {
   const { session_id } = await searchParams
@@ -20,6 +21,7 @@ export default async function Success({ searchParams }) {
   }
 
   if (status === 'complete') {
+    console.log(metadata)
     return (
       <section id="success">
         <p>
