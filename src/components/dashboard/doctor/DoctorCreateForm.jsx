@@ -72,7 +72,6 @@ export default function DoctorCreateForm({ doctor }) {
     };
 
     const res = await updateDoctorProfile(doctor?._id, doctorFormData);
-    console.log(res);
     if (res.modifiedCount > 0) {
       alert("Profile Update Successful!");
     }
