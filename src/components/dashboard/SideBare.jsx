@@ -26,14 +26,14 @@ const SideBare = async () => {
       {
         icon: Calendar,
         label: "My Appointments",
-        path: "/dashboard/appointments",
+        path: "/dashboard/patient/appointments",
       },
       {
         icon: CreditCard,
         label: "Payment History",
-        path: "/dashboard/payments",
+        path: "/dashboard/patient/payments",
       },
-      { icon: Star, label: "My Reviews", path: "/dashboard/reviews" },
+      { icon: Star, label: "My Reviews", path: "/dashboard/patient/reviews" },
     ],
     doctor: [
       { icon: LayoutGrid, label: "Dashboard Overview", path: "/dashboard/doctor" },

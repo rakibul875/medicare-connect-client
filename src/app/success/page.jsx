@@ -22,11 +22,13 @@ export default async function Success({ searchParams }) {
 
   if (status === "complete") {
     const data = metadata;
+    
     const paymentInfo = {
       amount: data.amount,
       userId: data.userId,
       doctorId: data.doctorId,
     };
+    
     const bookingInfo = {
       doctorId: data.doctorId,
       doctorName: data.doctorName,
@@ -34,9 +36,9 @@ export default async function Success({ searchParams }) {
       date: data.date,
       AppointmentStatus: "pending",
     };
-    const subscriptionData = { ...paymentInfo,sessionId:session_id };
+    const subscriptionData = { ...paymentInfo,sessionId:session_id, doctorName:data.doctorName, };
     const res = await handelPostSubscriptionData(subscriptionData)
-    console.log(bookingInfo)
+      console.log(paymentInfo)
     return (
       <section id="success">
         <p>

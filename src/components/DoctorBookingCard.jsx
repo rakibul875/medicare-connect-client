@@ -1,12 +1,16 @@
 import { getDoctorSchedule } from "@/lib/api/getDoctorSchedule";
 import React from "react";
 import BookingFormClient from "./BookingFormClient";
+import { getUserSession } from "@/lib/api/getUsers";
+import { redirect } from "next/navigation";
 
-
-const DoctorBookingCard = async ({ doctorId,doctor }) => {
+const DoctorBookingCard = async ({ doctorId, doctor }) => {
+  const user = await getUserSession();
+  if (!user) {
+    redirect("/login");
+  }
   const doctorSchedule = await getDoctorSchedule(doctorId);
 
-  
   if (!doctorSchedule || doctorSchedule.length === 0) {
     return (
       <div className="w-full max-w-xl mx-auto bg-white rounded-[2rem] border border-gray-100 p-12 text-center shadow-sm">
