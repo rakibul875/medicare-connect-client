@@ -1,13 +1,14 @@
-"use client";
+'use client'
 import {
   handelStatusByDoctor,
   handelStatusRejectedByDoctor,
 } from "@/lib/post/appointment";
 import { useRouter } from "next/navigation";
 import React from "react";
+import PrescriptionForm from "./PrescriptionForm";
 
 const DoctorAppointmentList = ({ appointments }) => {
-  const router = useRouter();
+  // const router = useRouter();
   const handleApprove = async (id) => {
     const res = await handelStatusByDoctor(id);
     if (res.modifiedCount > 0) {
@@ -24,9 +25,6 @@ const DoctorAppointmentList = ({ appointments }) => {
     }
   };
 
-  const handleAddPrescription = (id) => {
-    alert(`Redirecting to add prescription for ID: ${id}`);
-  };
 
   return (
     <div className="w-full bg-white rounded-[1.5rem] border border-gray-100 p-4 sm:p-6 shadow-sm mt-4">
@@ -49,7 +47,7 @@ const DoctorAppointmentList = ({ appointments }) => {
                 >
                   <td className="py-4 px-4 sm:px-6">
                     <span className="font-bold block text-gray-900">
-                     {appointment.userName || 'patient'}
+                      {appointment.userName || "patient"}
                     </span>
                     <span className="text-xs text-gray-400 font-normal block mt-0.5">
                       UID: {appointment.userId.slice(-6)}
@@ -98,14 +96,7 @@ const DoctorAppointmentList = ({ appointments }) => {
 
                       {appointment.AppointmentStatus === "approved" && (
                         <>
-                          <button
-                            onClick={() =>
-                              handleAddPrescription(appointment._id)
-                            }
-                            className="bg-[#006694]/10 text-[#006694] hover:bg-[#006694]/20 text-xs font-bold px-4 py-2 rounded-xl transition-all cursor-pointer"
-                          >
-                            + Add Prescription
-                          </button>
+                          <PrescriptionForm appointmentId={appointment._id}/>
                           <button
                             onClick={() => handleReject(appointment._id)}
                             className="bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer"

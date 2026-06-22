@@ -7,7 +7,7 @@ const AppointmentPage = async () => {
   const user = await getUserSession();
   const doctorId = user?.id;
   const appointments = (await getDoctorAppointment(doctorId)) || [];
-
+ 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-4">
