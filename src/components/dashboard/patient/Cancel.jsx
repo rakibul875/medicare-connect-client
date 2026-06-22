@@ -29,14 +29,12 @@ const Cancel = ({id}) => {
               <AlertDialog.Header>
                 <AlertDialog.Icon status="danger" />
                 <AlertDialog.Heading>
-                  Delete project permanently?
+                Appointment cancellation Confirmation?
                 </AlertDialog.Heading>
               </AlertDialog.Header>
               <AlertDialog.Body>
                 <p>
-                  This will permanently delete{" "}
-                  <strong>My Awesome Project</strong> and all of its data. This
-                  action cannot be undone.
+                 Are you sure you want to cancel this appointment
                 </p>
               </AlertDialog.Body>
               <AlertDialog.Footer>
@@ -44,7 +42,7 @@ const Cancel = ({id}) => {
                   Cancel
                 </Button>
                 <Button onClick={() => handleCancel(id)} slot="close" variant="danger">
-                  cancelAppointment
+                  Yes I Want To
                 </Button>
               </AlertDialog.Footer>
             </AlertDialog.Dialog>

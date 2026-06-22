@@ -37,6 +37,7 @@ export default async function Success({ searchParams }) {
       date: data.date,
       doctorImage:data.profileImage,
       userId:data.userId,
+      userName:data.userName,
       AppointmentStatus: "pending",
     };
     const subscriptionData = { ...paymentInfo,sessionId:session_id, doctorName:data.doctorName, };

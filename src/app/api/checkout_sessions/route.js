@@ -31,6 +31,7 @@ export async function POST(request) {
       ],
       metadata: {
         userId: user?.id || "",
+        userName:user?.name,
         doctorId: doctorId,
         amount: Number(amount),
         doctorName: doctorName,

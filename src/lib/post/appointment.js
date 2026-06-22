@@ -10,3 +10,6 @@ export const handelAppointmentStatus= async (id)=>{
 export const handelStatusByDoctor= async (id)=>{
  return handelPost(`/appointment/${id}/approve`,{},'PATCH')
 }
+export const handelStatusRejectedByDoctor= async (id)=>{
+ return handelPost(`/appointment/${id}/rejected`,{},'PATCH')
+}

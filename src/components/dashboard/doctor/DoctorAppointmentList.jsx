@@ -1,17 +1,27 @@
 "use client";
-import { handelStatusByDoctor } from "@/lib/post/appointment";
+import {
+  handelStatusByDoctor,
+  handelStatusRejectedByDoctor,
+} from "@/lib/post/appointment";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const DoctorAppointmentList = ({ appointments }) => {
+  const router = useRouter();
   const handleApprove = async (id) => {
     const res = await handelStatusByDoctor(id);
-    if (res.modifyCount > 0) {
-      alert("Approved successful");
+    if (res.modifiedCount > 0) {
+      alert("Appointment Approve");
+      router.refresh();
     }
   };
 
-  const handleReject = (id) => {
-    alert(`Reject appointment for ID: ${id}`);
+  const handleReject = async (id) => {
+    const res = await handelStatusRejectedByDoctor(id);
+    if (res.modifiedCount > 0) {
+      alert("Appointment Rejected");
+      router.refresh();
+    }
   };
 
   const handleAddPrescription = (id) => {
@@ -39,7 +49,7 @@ const DoctorAppointmentList = ({ appointments }) => {
                 >
                   <td className="py-4 px-4 sm:px-6">
                     <span className="font-bold block text-gray-900">
-                      Patient
+                     {appointment.userName || 'patient'}
                     </span>
                     <span className="text-xs text-gray-400 font-normal block mt-0.5">
                       UID: {appointment.userId.slice(-6)}
@@ -109,6 +119,14 @@ const DoctorAppointmentList = ({ appointments }) => {
                         <span className="text-xs text-rose-400 font-bold italic select-none">
                           Cancelled
                         </span>
+                      )}
+                      {appointment.AppointmentStatus === "rejected" && (
+                        <button
+                          onClick={() => handleApprove(appointment._id)}
+                          className="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer"
+                        >
+                          Approve
+                        </button>
                       )}
                     </div>
                   </td>

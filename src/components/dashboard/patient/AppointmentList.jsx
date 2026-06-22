@@ -4,7 +4,6 @@ import Cancel from "./Cancel";
 
 const AppointmentList = ({ appointments }) => {
   const handleReview = (id) => {
-   
     alert(`Open review modal for ID: ${id}`);
   };
 
@@ -27,7 +26,6 @@ const AppointmentList = ({ appointments }) => {
                   key={appointment._id}
                   className="hover:bg-gray-50/40 transition-colors"
                 >
-                
                   <td className="py-4 px-4 sm:px-6">
                     <div className="flex items-center gap-3">
                       {appointment.doctorImage && (
@@ -48,7 +46,6 @@ const AppointmentList = ({ appointments }) => {
                     </div>
                   </td>
 
-                
                   <td className="py-4 px-4 sm:px-6 text-gray-600">
                     <div className="font-semibold">{appointment.date}</div>
                     <div className="text-xs text-gray-400 font-normal mt-0.5">
@@ -56,7 +53,6 @@ const AppointmentList = ({ appointments }) => {
                     </div>
                   </td>
 
-           
                   <td className="py-4 px-4 sm:px-6">
                     <span
                       className={`inline-flex items-center text-[10px] font-extrabold px-2.5 py-1 rounded-xl uppercase border tracking-wider ${
@@ -64,20 +60,24 @@ const AppointmentList = ({ appointments }) => {
                           ? "bg-amber-50 text-amber-600 border-amber-100"
                           : appointment.AppointmentStatus === "completed"
                             ? "bg-emerald-50 text-emerald-600 border-emerald-100"
-                            : "bg-gray-50 text-red-500 border-gray-100"
+                            : appointment.AppointmentStatus === "approved"
+                              ? "bg-emerald-50 text-emerald-600 border-emerald-100"
+                              : "bg-gray-50 text-red-500 border-gray-100"
                       }`}
                     >
                       {appointment.AppointmentStatus}
                     </span>
                   </td>
 
-                 
                   <td className="py-4 px-4 sm:px-6 text-right">
                     {appointment.AppointmentStatus === "pending" && (
-                     <Cancel id={appointment._id} appointment={appointment}/>
+                      <Cancel id={appointment._id} appointment={appointment} />
                     )}
                     {appointment.AppointmentStatus === "cancelled" && (
-                     <p className="text-red-300 text-sm ">cancelled</p>
+                      <p className="text-red-300 text-sm ">cancelled</p>
+                    )}
+                    {appointment.AppointmentStatus === "approved" && (
+                      <p className="text-emerald-600 text-sm ">withing for prescription</p>
                     )}
 
                     {appointment.AppointmentStatus === "completed" && (
