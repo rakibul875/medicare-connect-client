@@ -5,7 +5,6 @@ import { Clock, Plus, Save } from "lucide-react";
 import { handelScheduleList } from "@/lib/post/doctorSchedule";
 
 const AddScheduleForm = ({ doctorId }) => {
- console.log(doctorId)
   const [selectedDays, setSelectedDays] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
   const [slotsList, setSlotsList] = useState([]);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Pencil, Clock } from "lucide-react";
+import { Clock } from "lucide-react";
 import ScheduleDelete from "./ScheduleDelete";
 import UpdateScheduleForm from "./UpdateScheduleForm";
 
