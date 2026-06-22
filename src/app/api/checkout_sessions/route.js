@@ -39,6 +39,7 @@ export async function POST(request) {
         date: bookingPayload.date,
         timeSlot: bookingPayload.timeSlot,
         doctorName: bookingPayload.doctorName,
+        profileImage:bookingPayload.profileImage,
       },
       mode: "payment",
       success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,

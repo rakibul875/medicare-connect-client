@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { stripe } from "../../lib/stripe";
 import { handelPostSubscriptionData } from "@/lib/post/postsubscription";
+import { handelAppointmentPost } from "@/lib/post/appointment";
 
 export default async function Success({ searchParams }) {
   const { session_id } = await searchParams;
@@ -29,16 +30,18 @@ export default async function Success({ searchParams }) {
       doctorId: data.doctorId,
     };
     
-    const bookingInfo = {
+    const appointmentInfo = {
       doctorId: data.doctorId,
       doctorName: data.doctorName,
       timeSlot: data.timeSlot,
       date: data.date,
+      doctorImage:data.profileImage,
       AppointmentStatus: "pending",
     };
     const subscriptionData = { ...paymentInfo,sessionId:session_id, doctorName:data.doctorName, };
     const res = await handelPostSubscriptionData(subscriptionData)
-      console.log(paymentInfo)
+    const appointmentRes= await handelAppointmentPost(appointmentInfo)
+    console.log(appointmentRes)
     return (
       <section id="success">
         <p>

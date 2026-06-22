@@ -115,6 +115,7 @@ const BookingFormClient = ({ schedules, doctor }) => {
             date: selectedDateObj.computedDate,
             timeSlot: selectedSlot,
             doctorName: doctor.doctorName,
+            profileImage:doctor.profileImage,
           })}
         />
         <button
