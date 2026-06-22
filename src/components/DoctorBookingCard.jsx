@@ -20,6 +20,7 @@ const DoctorBookingCard = async ({ doctorId, doctor }) => {
       </div>
     );
   }
+
   const getNextDateForDay = (targetDayStr) => {
     const daysOfWeek = [
       "Sunday",
@@ -31,20 +32,25 @@ const DoctorBookingCard = async ({ doctorId, doctor }) => {
       "Saturday",
     ];
     const today = new Date();
-    const currentDayIndex = today.getDay();
-    const targetDayIndex = daysOfWeek.indexOf(targetDayStr);
+    const currentDayIndex = today.getDay(); 
+    const targetDayIndex = daysOfWeek.indexOf(targetDayStr); 
 
     if (targetDayIndex === -1) return null;
 
     let daysUntilTarget = targetDayIndex - currentDayIndex;
-    if (daysUntilTarget <= 0) {
+
+    
+    if (daysUntilTarget < 0) {
       daysUntilTarget += 7;
     }
 
     const nextDate = new Date(today);
     nextDate.setDate(today.getDate() + daysUntilTarget);
+    const year = nextDate.getFullYear();
+    const month = String(nextDate.getMonth() + 1).padStart(2, "0");
+    const date = String(nextDate.getDate()).padStart(2, "0");
 
-    return nextDate.toISOString().split("T")[0];
+    return `${year}-${month}-${date}`;
   };
   const processedSchedules = doctorSchedule
     .map((item) => ({

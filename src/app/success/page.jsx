@@ -25,7 +25,7 @@ export default async function Success({ searchParams }) {
     const data = metadata;
     
     const paymentInfo = {
-      amount: data.amount,
+      amount: Number(data.amount),
       userId: data.userId,
       doctorId: data.doctorId,
     };
@@ -36,6 +36,7 @@ export default async function Success({ searchParams }) {
       timeSlot: data.timeSlot,
       date: data.date,
       doctorImage:data.profileImage,
+      userId:data.userId,
       AppointmentStatus: "pending",
     };
     const subscriptionData = { ...paymentInfo,sessionId:session_id, doctorName:data.doctorName, };
