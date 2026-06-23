@@ -1,18 +1,17 @@
 "use client";
 import React from "react";
+import PrescriptionEditForm from "./PrescriptionEditForm";
+
 
 const PrescriptionCardList = ({ prescriptions }) => {
-  const handleEdit = (id) => {
-    console.log("Editing Prescription ID:", id);
-    alert(`Redirecting or opening modal to edit prescription ID: ${id}`);
- 
-  };
+  // const handleEdit = (id) => {
+  //   alert(`Redirecting or opening modal to edit prescription ID: ${id}`);
+  // };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {prescriptions && prescriptions.length > 0 ? (
         prescriptions.map((item) => {
-      
           const formattedDate = new Date(
             item.prescriptionAt,
           ).toLocaleDateString("en-US", {
@@ -27,7 +26,6 @@ const PrescriptionCardList = ({ prescriptions }) => {
               className="bg-white rounded-[1.5rem] border border-gray-100 p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
             >
               <div>
-         
                 <div className="flex items-start justify-between border-b border-gray-50 pb-3 mb-4">
                   <div>
                     <span className="text-xs font-bold text-[#006694] uppercase tracking-wider block">
@@ -43,7 +41,6 @@ const PrescriptionCardList = ({ prescriptions }) => {
                   </span>
                 </div>
 
-               
                 <div className="mb-3">
                   <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block">
                     Diagnosis / Symptoms
@@ -53,7 +50,6 @@ const PrescriptionCardList = ({ prescriptions }) => {
                   </p>
                 </div>
 
-               
                 <div className="mb-4">
                   <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block">
                     Prescription Details
@@ -69,7 +65,7 @@ const PrescriptionCardList = ({ prescriptions }) => {
                   Appt: #{item.appointmentId?.slice(-5)}
                 </span>
 
-                <button
+                {/* <button
                   onClick={() => handleEdit(item._id)}
                   className="bg-sky-50 text-sky-600 hover:bg-sky-100 text-xs font-bold px-4 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1"
                 >
@@ -88,7 +84,8 @@ const PrescriptionCardList = ({ prescriptions }) => {
                     />
                   </svg>
                   Edit
-                </button>
+                </button> */}
+                <PrescriptionEditForm prescriptionId={item._id}/>
               </div>
             </div>
           );

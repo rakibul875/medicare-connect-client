@@ -4,17 +4,14 @@ import { redirect } from "next/navigation";
 import React from "react";
 import PrescriptionCardList from "@/components/dashboard/doctor/PrescriptionCardList";
 
-
 const Prescriptions = async () => {
   const user = await getUserSession();
   if (user?.role !== "doctor") {
     redirect("/unauthorized");
   }
-  const doctorId=user?.id
-
+  const doctorId = user?.id;
 
   const prescriptionData = (await getDoctorPrescription(doctorId)) || [];
-
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
@@ -32,7 +29,6 @@ const Prescriptions = async () => {
         </span>
       </div>
 
-    
       <PrescriptionCardList prescriptions={prescriptionData} />
     </div>
   );

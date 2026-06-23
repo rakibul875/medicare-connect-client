@@ -1,7 +1,5 @@
 "use client";
-import { authClient } from "@/lib/auth-client";
-import { handelStatusConfirmedByDoctor } from "@/lib/post/appointment";
-import { handelPrescriptionData } from "@/lib/post/prescription";
+import { handelPrescriptionPatch } from "@/lib/post/prescription";
 import { Envelope } from "@gravity-ui/icons";
 import {
   Button,
@@ -9,60 +7,44 @@ import {
   Label,
   Modal,
   Surface,
-  TextField,
   TextArea,
+  TextField,
 } from "@heroui/react";
-import { router } from "better-auth/api";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { FaRegEdit } from "react-icons/fa";
 
-const PrescriptionForm = ({ appointmentId }) => {
-  const [appointment, setAppointment] = useState(null || {});
+const PrescriptionEditForm = ({ prescriptionId }) => {
   const [prescription, setPrescription] = useState({});
   const router =useRouter()
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/appointment/${appointmentId}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/prescription/${prescriptionId}`,
       );
       const data = await res.json();
-      setAppointment(data);
+      setPrescription(data);
     };
 
     fetchData();
-  }, [appointmentId]);
-  const handleSubmit = async (e) => {
+  }, [prescriptionId]);
+  const handelSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData(e.currentTarget);
-    const formValues = Object.fromEntries(formData.entries());
-
-    const fullPayload = {
-      appointmentId,
-      patientName: formValues.patientName,
-      diagnosis: formValues.diagnosis,
-      description: formValues.description,
-      doctorId: appointment.doctorId,
-      patientName: appointment.userName,
-      patientId: appointment.userId,
-    };
-
-    setPrescription(fullPayload);
-    const res = await handelPrescriptionData(fullPayload);
-    if (res.insertedId) {
-      alert("prescription Add successful");
-      router.refresh()
-    }
-    if (res.success === false) {
-      alert(`${res.message}`);
+    const updateData = Object.fromEntries(formData.entries());
+    const res = await handelPrescriptionPatch(prescriptionId, updateData);
+    if (res.modifiedCount > 0) {
+      alert("Prescription Update Successful");
+      router.refresh();
     }
   };
-
   return (
     <div>
       <Modal>
-        <Button variant="secondary">+ Add Prescription</Button>
+        <Button className="bg-sky-50 text-sky-600 hover:bg-sky-100 text-xs font-bold px-4 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-2">
+         <FaRegEdit /> Edit
+        </Button>
         <Modal.Backdrop>
           <Modal.Container placement="auto">
             <Modal.Dialog className="sm:max-w-md">
@@ -81,10 +63,10 @@ const PrescriptionForm = ({ appointmentId }) => {
 
               <Modal.Body className="p-6">
                 <Surface variant="default">
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                  <form onSubmit={handelSubmit} className="flex flex-col gap-4">
                     <TextField
+                      defaultValue={prescription.patientName}
                       className="w-full"
-                      defaultValue={appointment.userName}
                       variant="secondary"
                     >
                       <Label>Patient Name</Label>
@@ -95,7 +77,11 @@ const PrescriptionForm = ({ appointmentId }) => {
                       />
                     </TextField>
 
-                    <TextField className="w-full" variant="secondary">
+                    <TextField
+                      defaultValue={prescription.diagnosis}
+                      className="w-full"
+                      variant="secondary"
+                    >
                       <Label>Patient diagnosis</Label>
                       <Input
                         name="diagnosis"
@@ -109,6 +95,7 @@ const PrescriptionForm = ({ appointmentId }) => {
                         Prescription Description
                       </Label>
                       <TextArea
+                        defaultValue={prescription.description}
                         aria-label="Prescription description"
                         className="h-32 w-full"
                         placeholder="Write medicines, dosage, advice, or symptoms here..."
@@ -137,4 +124,4 @@ const PrescriptionForm = ({ appointmentId }) => {
   );
 };
 
-export default PrescriptionForm;
+export default PrescriptionEditForm;
