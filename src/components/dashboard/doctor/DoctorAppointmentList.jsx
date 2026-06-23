@@ -8,7 +8,7 @@ import React from "react";
 import PrescriptionForm from "./PrescriptionForm";
 
 const DoctorAppointmentList = ({ appointments }) => {
-  // const router = useRouter();
+  const router = useRouter();
   const handleApprove = async (id) => {
     const res = await handelStatusByDoctor(id);
     if (res.modifiedCount > 0) {

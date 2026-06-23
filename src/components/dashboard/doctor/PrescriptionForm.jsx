@@ -1,4 +1,6 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
+import { handelPrescriptionData } from "@/lib/post/prescription";
 import { Envelope } from "@gravity-ui/icons";
 import {
   Button,
@@ -12,8 +14,8 @@ import {
 import React, { useEffect, useState } from "react";
 
 const PrescriptionForm = ({ appointmentId }) => {
-  const [appointment, setAppointment] = useState(null);
-  const [prescription,setPrescription]=useState({})
+  const [appointment, setAppointment] = useState(null || {});
+  const [prescription, setPrescription] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +28,7 @@ const PrescriptionForm = ({ appointmentId }) => {
 
     fetchData();
   }, [appointmentId]);
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -37,17 +39,20 @@ const PrescriptionForm = ({ appointmentId }) => {
       patientName: formValues.patientName,
       diagnosis: formValues.diagnosis,
       description: formValues.description,
+      doctorId: appointment.doctorId,
+      patientName: appointment.userName,
+      patientId: appointment.userId,
     };
 
-    setPrescription(fullPayload)
-    console.log(appointment);
-
-    // console.log("Received Prescription Data Manually:", fullPayload);
-    alert(
-      `Data Received for: ${fullPayload.patientName || "Patient"}. Check Console!`,
-    );
+    setPrescription(fullPayload);
+    const res = await handelPrescriptionData(fullPayload);
+    if (res.insertedId) {
+      alert("prescription Add successful");
+    }
+    if (res.success === false) {
+      alert(`${res.message}`);
+    }
   };
-  console.log('out side form', prescription)
 
   return (
     <div>
@@ -72,7 +77,11 @@ const PrescriptionForm = ({ appointmentId }) => {
               <Modal.Body className="p-6">
                 <Surface variant="default">
                   <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    <TextField className="w-full" variant="secondary">
+                    <TextField
+                      className="w-full"
+                      defaultValue={appointment.userName}
+                      variant="secondary"
+                    >
                       <Label>Patient Name</Label>
                       <Input
                         name="patientName"
@@ -82,7 +91,7 @@ const PrescriptionForm = ({ appointmentId }) => {
                     </TextField>
 
                     <TextField className="w-full" variant="secondary">
-                      <Label>Patient Age</Label>
+                      <Label>Patient diagnosis</Label>
                       <Input
                         name="diagnosis"
                         placeholder="Enter patient Diagnosis"
