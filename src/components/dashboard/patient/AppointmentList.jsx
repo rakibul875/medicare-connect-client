@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Cancel from "./Cancel";
+import ReviewForm from "./ReviewForm";
 
 const AppointmentList = ({ appointments }) => {
   const handleReview = (id) => {
@@ -77,16 +78,24 @@ const AppointmentList = ({ appointments }) => {
                       <p className="text-red-300 text-sm ">cancelled</p>
                     )}
                     {appointment.AppointmentStatus === "approved" && (
-                      <p className="text-emerald-600 text-sm ">withing for prescription</p>
+                      <p className="text-emerald-600 text-sm ">
+                        withing for prescription
+                      </p>
                     )}
 
-                    {appointment.AppointmentStatus === "completed" && (
-                      <button
-                        onClick={() => handleReview(appointment._id)}
-                        className="bg-[#006694]/10 text-[#006694] hover:bg-[#006694]/20 text-xs font-bold px-4 py-2 rounded-xl transition-all cursor-pointer active:scale-95"
-                      >
-                        Give Review
-                      </button>
+                    {appointment.AppointmentStatus === "confirmed" && (
+                      <div className="flex mr-0 px-0">
+                        <button className="bg-[#006694]/10 text-[#006694] hover:bg-[#006694]/20 text-xs font-bold px-4 py-2 rounded-xl transition-all cursor-pointer active:scale-95">
+                          +Add To Favorite
+                        </button>
+                        {appointment.AppointmentStatus === "reviewed" ? (
+                          ""
+                        ) : (
+                          <div className="">
+                            <ReviewForm  appointmentId={appointment._id}/>
+                          </div>
+                        )}
+                      </div>
                     )}
                   </td>
                 </tr>
