@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   handelStatusByDoctor,
   handelStatusRejectedByDoctor,
@@ -24,7 +24,6 @@ const DoctorAppointmentList = ({ appointments }) => {
       router.refresh();
     }
   };
-
 
   return (
     <div className="w-full bg-white rounded-[1.5rem] border border-gray-100 p-4 sm:p-6 shadow-sm mt-4">
@@ -68,7 +67,9 @@ const DoctorAppointmentList = ({ appointments }) => {
                           ? "bg-amber-50 text-amber-600 border-amber-100"
                           : appointment.AppointmentStatus === "approved"
                             ? "bg-emerald-50 text-emerald-600 border-emerald-100"
-                            : "bg-rose-50 text-rose-600 border-rose-100"
+                            : appointment.AppointmentStatus === "confirmed"
+                              ? "bg-emerald-50 text-emerald-800 border-emerald-100"
+                              : "bg-rose-50 text-rose-600 border-rose-100"
                       }`}
                     >
                       {appointment.AppointmentStatus}
@@ -76,50 +77,63 @@ const DoctorAppointmentList = ({ appointments }) => {
                   </td>
 
                   <td className="py-4 px-4 sm:px-6 text-center">
-                    <div className="flex items-center justify-center gap-2">
-                      {appointment.AppointmentStatus === "pending" && (
-                        <>
-                          <button
-                            onClick={() => handleApprove(appointment._id)}
-                            className="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer"
-                          >
-                            Approve
-                          </button>
-                          <button
-                            onClick={() => handleReject(appointment._id)}
-                            className="bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer"
-                          >
-                            Reject
-                          </button>
-                        </>
-                      )}
+                    {appointment.AppointmentStatus === "confirmed" ? (
+                      <>
+                        <p className="inline-flex items-center text-[10px] font-extrabold px-2.5 py-1 rounded-xl uppercase border tracking-wider bg-emerald-700 text-white border-emerald-100">
+                          CONFIRMED
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        {" "}
+                        <div className="flex items-center justify-center gap-2">
+                          {appointment.AppointmentStatus === "pending" && (
+                            <>
+                              <button
+                                onClick={() => handleApprove(appointment._id)}
+                                className="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer"
+                              >
+                                Approve
+                              </button>
+                              <button
+                                onClick={() => handleReject(appointment._id)}
+                                className="bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer"
+                              >
+                                Reject
+                              </button>
+                            </>
+                          )}
 
-                      {appointment.AppointmentStatus === "approved" && (
-                        <>
-                          <PrescriptionForm appointmentId={appointment._id}/>
-                          <button
-                            onClick={() => handleReject(appointment._id)}
-                            className="bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer"
-                          >
-                            Reject
-                          </button>
-                        </>
-                      )}
+                          {appointment.AppointmentStatus === "approved" && (
+                            <>
+                              <PrescriptionForm
+                                appointmentId={appointment._id}
+                              />
+                              <button
+                                onClick={() => handleReject(appointment._id)}
+                                className="bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer"
+                              >
+                                Reject
+                              </button>
+                            </>
+                          )}
 
-                      {appointment.AppointmentStatus === "cancelled" && (
-                        <span className="text-xs text-rose-400 font-bold italic select-none">
-                          Cancelled
-                        </span>
-                      )}
-                      {appointment.AppointmentStatus === "rejected" && (
-                        <button
-                          onClick={() => handleApprove(appointment._id)}
-                          className="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer"
-                        >
-                          Approve
-                        </button>
-                      )}
-                    </div>
+                          {appointment.AppointmentStatus === "cancelled" && (
+                            <span className="text-xs text-rose-400 font-bold italic select-none">
+                              Cancelled
+                            </span>
+                          )}
+                          {appointment.AppointmentStatus === "rejected" && (
+                            <button
+                              onClick={() => handleApprove(appointment._id)}
+                              className="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer"
+                            >
+                              Approve
+                            </button>
+                          )}
+                        </div>
+                      </>
+                    )}
                   </td>
                 </tr>
               ))

@@ -1,5 +1,6 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
+import { handelStatusConfirmedByDoctor } from "@/lib/post/appointment";
 import { handelPrescriptionData } from "@/lib/post/prescription";
 import { Envelope } from "@gravity-ui/icons";
 import {
@@ -11,11 +12,14 @@ import {
   TextField,
   TextArea,
 } from "@heroui/react";
+import { router } from "better-auth/api";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const PrescriptionForm = ({ appointmentId }) => {
   const [appointment, setAppointment] = useState(null || {});
   const [prescription, setPrescription] = useState({});
+  const router =useRouter()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +52,7 @@ const PrescriptionForm = ({ appointmentId }) => {
     const res = await handelPrescriptionData(fullPayload);
     if (res.insertedId) {
       alert("prescription Add successful");
+      router.refresh()
     }
     if (res.success === false) {
       alert(`${res.message}`);
