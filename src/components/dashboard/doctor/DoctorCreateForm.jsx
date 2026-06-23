@@ -15,10 +15,12 @@ import {
 import { Button, Modal, Surface } from "@heroui/react";
 import { Envelope } from "@gravity-ui/icons";
 import { updateDoctorProfile } from "@/lib/post/doctor-profile";
-
+import { router } from "better-auth/api";
+import { useRouter } from "next/navigation";
 
 export default function DoctorCreateForm({ doctor }) {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const [imageUrl, setImageUrl] = useState(
     doctor?.profileImage || "https://i.ibb.co/zVqTgyFb/download-7.jpg",
@@ -74,6 +76,7 @@ export default function DoctorCreateForm({ doctor }) {
     const res = await updateDoctorProfile(doctor?._id, doctorFormData);
     if (res.modifiedCount > 0) {
       alert("Profile Update Successful!");
+      router.refresh();
     }
     setIsOpen(false);
   };

@@ -17,6 +17,7 @@ import { authClient } from "@/lib/auth-client";
 import { doctorProfile } from "@/lib/post/doctor-profile";
 import DoctorCreateForm from "./DoctorCreateForm";
 
+
 export default function ProfileForm({ doctorId, doctor, onSaveProfile }) {
   const { data: session } = authClient.useSession();
   const user = session?.user;
@@ -27,6 +28,7 @@ export default function ProfileForm({ doctorId, doctor, onSaveProfile }) {
   const [imageUrl, setImageUrl] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -79,6 +81,7 @@ export default function ProfileForm({ doctorId, doctor, onSaveProfile }) {
       alert("Submit Successful");
       setCurrentDoctor(newDoctorData); 
       setIsSubmitted(true);
+
     }
 
     if (onSaveProfile) {
