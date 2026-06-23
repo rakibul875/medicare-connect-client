@@ -1,12 +1,12 @@
 import React from "react";
 import { Calendar, Users, DollarSign, Star } from "lucide-react";
 
-const HomeCard = () => {
+const HomeCard = ({totalAmount,totalPatient,todayAppointment}) => {
 
   const analyticsData = [
     {
       title: "TODAY'S VISITS",
-      value: "08",
+      value: todayAppointment,
       change: "+12%",
       isPositive: true,
       icon: <Calendar className="w-5 h-5 text-[#006694]" />,
@@ -14,7 +14,7 @@ const HomeCard = () => {
     },
     {
       title: "TOTAL PATIENTS",
-      value: "1,284",
+      value: totalPatient,
       change: "+4%",
       isPositive: true,
       icon: <Users className="w-5 h-5 text-[#014d34]" />,
@@ -22,7 +22,7 @@ const HomeCard = () => {
     },
     {
       title: "MONTHLY EARNINGS",
-      value: "$12,450",
+      value: `$${totalAmount}`,
       change: "+8%",
       isPositive: true,
       icon: <DollarSign className="w-5 h-5 text-[#006694]" />,
