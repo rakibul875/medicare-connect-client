@@ -11,10 +11,10 @@ const Prescriptions = async () => {
     redirect("/unauthorized");
   }
   const doctorId=user?.id
-  console.log(doctorId)
+
 
   const prescriptionData = (await getDoctorPrescription(doctorId)) || [];
-  console.log(prescriptionData)
+
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
