@@ -2,12 +2,9 @@
 import React from "react";
 import Cancel from "./Cancel";
 import ReviewForm from "./ReviewForm";
+import Favorite from "./Favorite";
 
 const AppointmentList = ({ appointments }) => {
-  const handleReview = (id) => {
-    alert(`Open review modal for ID: ${id}`);
-  };
-
   return (
     <div className="w-full bg-white rounded-[1.5rem] border border-gray-100 p-4 sm:p-6 shadow-sm mt-4">
       <div className="overflow-x-auto rounded-xl border border-gray-100">
@@ -85,16 +82,10 @@ const AppointmentList = ({ appointments }) => {
 
                     {appointment.AppointmentStatus === "confirmed" && (
                       <div className="flex mr-0 px-0">
-                        <button className="bg-[#006694]/10 text-[#006694] hover:bg-[#006694]/20 text-xs font-bold px-4 py-2 rounded-xl transition-all cursor-pointer active:scale-95">
-                          +Add To Favorite
-                        </button>
-                        {appointment.AppointmentStatus === "reviewed" ? (
-                          ""
-                        ) : (
-                          <div className="">
-                            <ReviewForm  appointmentId={appointment._id}/>
-                          </div>
-                        )}
+                        <Favorite appointmentId={appointment._id} />
+                        <div className="">
+                          <ReviewForm appointmentId={appointment._id} />
+                        </div>
                       </div>
                     )}
                   </td>
