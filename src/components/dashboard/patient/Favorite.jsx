@@ -31,7 +31,7 @@ const Favorite = ({ appointmentId }) => {
         alert('Add Favorite Successful')
     }
     if(res.success===false){
-        alert(message)
+        alert(res.message)
     }
   }
   
