@@ -1,20 +1,36 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
+import { handelPostReview } from "@/lib/post/review";
 import { Envelope } from "@gravity-ui/icons";
 import { Button, Label, Modal, Surface, TextArea } from "@heroui/react";
-import React, { useState } from "react";
-import { FaStar } from "react-icons/fa"; // 🚀 React Icon ইমপোর্ট করা হয়েছে
 
-const ReviewForm = ({ doctorId, appointmentId }) => {
-    console.log(appointmentId)
+import React, { useEffect, useState } from "react";
+import { FaStar } from "react-icons/fa";
+
+const ReviewForm = ({ appointmentId }) => {
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
+  const [appointment, setAppointment] = useState({});
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/appointment/${appointmentId}`,
+      );
+      const data = await res.json();
+      setAppointment(data);
+    };
 
-  const handleSubmit = (e) => {
+    fetchData();
+  }, [appointmentId]);
+
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const formValues = Object.fromEntries(formData.entries());
-
 
     if (rating === 0) {
       alert("Please select a star rating!");
@@ -22,14 +38,22 @@ const ReviewForm = ({ doctorId, appointmentId }) => {
     }
 
     const reviewPayload = {
-      doctorId,
+      doctorId: appointment.doctorId,
       rating: rating,
       description: formValues.description,
-      
+      userImage: user.profilePhoto,
+      userId: user.id,
+      doctorName: appointment.doctorName,
+      appointmentId:appointmentId
     };
-
-    console.log("Received Review Data with React Icons:", reviewPayload);
-    alert(`Thank you for your ${reviewPayload.rating}-star review!`);
+   
+    const res = await handelPostReview(reviewPayload);
+    if (res.insertedId) {
+      alert(`Thank you for your ${reviewPayload.rating}-star review!`);
+    }
+    if(res.success===false){
+      alert(res.message)
+    }
   };
 
   return (
@@ -56,7 +80,6 @@ const ReviewForm = ({ doctorId, appointmentId }) => {
               <Modal.Body className="p-6">
                 <Surface variant="default">
                   <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    {/* 🎯 ১. রেটিং সেকশন (React Icons দিয়ে) */}
                     <div className="w-full flex flex-col gap-1.5">
                       <Label className="text-sm font-medium text-foreground">
                         Your Rating
@@ -72,15 +95,14 @@ const ReviewForm = ({ doctorId, appointmentId }) => {
                             onMouseLeave={() => setHoverRating(0)}
                             className="cursor-pointer transition-transform active:scale-110 focus:outline-none"
                           >
-                            {/* 🚀 React Icon কম্পোনেন্ট */}
                             <FaStar
-                              size={28} // আইকনের সাইজ ছোট-বড় করতে পারবেন
+                              size={28}
                               className="transition-colors duration-150"
                               color={
                                 star <= (hoverRating || rating)
                                   ? "#FBBF24"
                                   : "#E5E7EB"
-                              } // সিলেক্টেড হলে গোল্ডেন হলুদ, না হলে হালকা গ্রে
+                              }
                             />
                           </button>
                         ))}
@@ -93,7 +115,6 @@ const ReviewForm = ({ doctorId, appointmentId }) => {
                       </div>
                     </div>
 
-                    {/* ২. বিবরণ */}
                     <div className="w-full flex flex-col gap-1.5">
                       <Label className="text-sm font-medium text-foreground">
                         Review Description
@@ -107,7 +128,7 @@ const ReviewForm = ({ doctorId, appointmentId }) => {
                       />
                     </div>
 
-                    <Button type="submit" className="w-full mt-2">
+                    <Button slot="close" type="submit" className="w-full mt-2">
                       Submit Review
                     </Button>
                   </form>
