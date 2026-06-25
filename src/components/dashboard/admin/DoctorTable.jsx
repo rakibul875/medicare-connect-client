@@ -1,14 +1,29 @@
 "use client";
+import { updateDoctorStatus } from "@/lib/post/doctor-profile";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-const DoctorTable = ({initialDoctors}) => {
+const DoctorTable = ({ initialDoctors = [] }) => {
+  const router = useRouter();
+  const handleApprove = async (id) => {
+    const res = await updateDoctorStatus(id, {
+      verificationStatus: "approved",
+    });
+    if (res.modifiedCount > 0) {
+      alert(`Doctor Approved Successful`);
+      router.refresh();
+    }
+  };
 
-const handleApprove=(id)=>{
-    alert('button Click',id)
-}
-const handleReject=(id)=>{
-    alert('button Click',id)
-}
+  const handleReject = async (id) => {
+    const res = await updateDoctorStatus(id, {
+      verificationStatus: "rejected",
+    });
+    if (res.modifiedCount > 0) {
+      alert(`Doctor Rejected Successful`);
+      router.refresh();
+    }
+  };
 
   return (
     <div className="bg-white rounded-[1.5rem] border border-gray-100 shadow-sm overflow-hidden">
@@ -23,7 +38,6 @@ const handleReject=(id)=>{
               <th className="py-4 px-6 text-right">Actions</th>
             </tr>
           </thead>
-
           <tbody className="divide-y divide-gray-50 text-sm">
             {initialDoctors.map((doctor) => {
               const status = doctor.verificationStatus?.toLowerCase();
@@ -33,7 +47,6 @@ const handleReject=(id)=>{
                   key={doctor._id}
                   className="hover:bg-gray-50/30 transition-colors"
                 >
-                  {/* ডক্টর ইনফো */}
                   <td className="py-4 px-6">
                     <div className="flex items-center gap-3">
                       <img
@@ -56,12 +69,10 @@ const handleReject=(id)=>{
                     </div>
                   </td>
 
-                  {/* স্পেশালাইজেশন */}
                   <td className="py-4 px-6 font-semibold text-gray-600">
                     {doctor.specialization}
                   </td>
 
-                  {/* হসপিটাল ও ভিজিট ফি */}
                   <td className="py-4 px-6">
                     <p className="text-gray-700 font-medium text-xs">
                       {doctor.hospitalName}
@@ -71,7 +82,6 @@ const handleReject=(id)=>{
                     </p>
                   </td>
 
-                  {/* স্ট্যাটাস ব্যাজ */}
                   <td className="py-4 px-6">
                     <span
                       className={`text-[10px] font-extrabold px-2.5 py-1 rounded-lg uppercase tracking-wider inline-block ${
@@ -86,22 +96,25 @@ const handleReject=(id)=>{
                     </span>
                   </td>
 
-                  {/* 🎯 আপনার রিকোয়ারমেন্ট অনুযায়ী পিওর বাটন অ্যাকশন (ক্লিক করলে শুধু _id পাস হবে) */}
                   <td className="py-4 px-6 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <button
-                        onClick={() => handleApprove(doctor._id)}
-                        className="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer"
-                      >
-                        Approve
-                      </button>
+                      {(status === "pending" || status === "rejected") && (
+                        <button
+                          onClick={() => handleApprove(doctor._id)}
+                          className="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer"
+                        >
+                          Approve
+                        </button>
+                      )}
 
-                      <button
-                        onClick={() => handleReject(doctor._id)}
-                        className="bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer"
-                      >
-                        Reject
-                      </button>
+                      {(status === "pending" || status === "approved") && (
+                        <button
+                          onClick={() => handleReject(doctor._id)}
+                          className="bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer"
+                        >
+                          Reject
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>

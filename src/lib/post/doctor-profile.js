@@ -7,3 +7,6 @@ export const doctorProfile=(doctorData)=>{
 export const updateDoctorProfile=async(id,updateData)=>{
     return handelPost(`/doctor/${id}`,updateData,'PATCH')
 }
+export const updateDoctorStatus=async(id,updateStatus)=>{
+    return handelPost(`/api/doctor/${id}`,updateStatus,'PATCH')
+}
