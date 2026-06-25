@@ -7,3 +7,7 @@ export const handelGetUserReview = async (userId) => {
 export const getReview=async()=>{
   return handelGetSection('/reviews')
 }
+
+export const getLastReview=()=>{
+  return handelGetSection('/review')
+}

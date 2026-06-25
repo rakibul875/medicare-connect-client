@@ -13,7 +13,7 @@ const Banner = ({totalAppointment,totalDoctor,averageRating,totalPatient}) => {
   ];
 
   return (
-    <section className="bg-gradient-to-br from-[#f3f8fc] to-[#ffffff] min-h-[85vh] flex items-center px-4 sm:px-6 lg:px-8 py-12 relative overflow-hidden">
+    <section className="bg-gradient-to-br from-[#f3f8fc] to-[#ffffff] min-h-[85vh] flex items-center px-2 sm:px-1 lg:px-3 py-12 relative overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
         <div className="space-y-6 z-10">
         
