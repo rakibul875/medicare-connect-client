@@ -1,6 +1,7 @@
 import DoctorAppointmentList from "@/components/dashboard/doctor/DoctorAppointmentList";
 import HomeCard from "@/components/dashboard/doctor/HomeCard";
 import UserReviewList from "@/components/dashboard/patient/UserReviewList";
+import Review from "@/components/Review";
 import { getTodayAppointment } from "@/lib/api/getAppointment";
 import { getUserSession } from "@/lib/api/getUsers";
 import { getPaymentHistoryDoctor } from "@/lib/api/paymentHistory";
@@ -42,7 +43,7 @@ const DoctorDashboard = async () => {
       <div className="my-5">
         <div className="">
           <h1 className="text-3xl font-bold mt-5">Reviews</h1>
-          <UserReviewList reviews={reviews}/>
+          <Review reviews={reviews}/>
         </div>
       </div>
     </div>

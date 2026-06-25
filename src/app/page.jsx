@@ -3,6 +3,7 @@ import Banner from "@/components/home/Banner";
 import MedicalSpecializations from "@/components/home/MedicalSpecializations";
 import WhyChoose from "@/components/home/WhyChoose";
 import HomeCard from "@/components/HomeCard";
+import Review from "@/components/Review";
 import { getAppointment } from "@/lib/api/getAppointment";
 import { getDoctor } from "@/lib/api/getDoctor";
 import { getUser } from "@/lib/api/getUsers";
@@ -65,7 +66,7 @@ const HomePage = async () => {
       <WhyChoose />
       <div className="my-5 container mx-auto">
         <h1 className="text-2xl sm:text-3xl font-bold text-[#006694] text-center my-3">Patient Reviews</h1>
-        <UserReviewList reviews={review}/>
+        <Review reviews={review}/>
       </div>
     </div>
   );
