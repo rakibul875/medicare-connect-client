@@ -1,22 +1,22 @@
 import React from "react";
 import Image from "next/image";
 import BannerImage from "@/assets/image/banner.jpg";
+import Link from "next/link";
 
-const Banner = () => {
+const Banner = ({totalAppointment,totalDoctor,averageRating,totalPatient}) => {
   // Stats Section Data Array
   const stats = [
-    { value: "10k+", label: "Doctors" },
-    { value: "500k+", label: "Patients" },
-    { value: "1M+", label: "Appointments" },
-    { value: "4.9", label: "Rating", icon: true },
+    { value: totalDoctor, label: "Doctors" },
+    { value: totalPatient, label: "Patients" },
+    { value: totalAppointment, label: "Appointments" },
+    { value: averageRating, label: "Rating", icon: true },
   ];
 
   return (
     <section className="bg-gradient-to-br from-[#f3f8fc] to-[#ffffff] min-h-[85vh] flex items-center px-4 sm:px-6 lg:px-8 py-12 relative overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
-        {/* Left Side: Text Contents & Buttons */}
         <div className="space-y-6 z-10">
-          {/* Badge */}
+        
           <div className="inline-flex items-center space-x-2 bg-[#006694]/10 text-[#006694] px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -35,22 +35,22 @@ const Banner = () => {
             <span>Healthcare Excellence</span>
           </div>
 
-          {/* Main Headings */}
+     
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
             <span className="text-[#006694] block">Book Trusted Doctors</span>
             <span className="text-[#014d34] block">Anytime, Anywhere</span>
           </h1>
 
-          {/* Description */}
+        
           <p className="text-gray-600 text-base sm:text-lg max-w-xl leading-relaxed">
             Experience healthcare reimagined. Connect with world-class medical
             professionals through our secure, high-tech clinical platform.
           </p>
 
-          {/* Action Call to Buttons */}
+   
           <div className="flex flex-wrap gap-4 pt-2">
-            {/* Find a Doctor Button */}
-            <button className="bg-[#149ddd] hover:bg-[#1080b5] text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg shadow-[#149ddd]/20 flex items-center space-x-2 transition-all group">
+  
+            <Link href={'/find-doctors'} className="bg-[#149ddd] hover:bg-[#1080b5] text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg shadow-[#149ddd]/20 flex items-center space-x-2 transition-all group">
               <span>Find a Doctor</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -66,9 +66,9 @@ const Banner = () => {
                   d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.642 10.642Z"
                 />
               </svg>
-            </button>
+            </Link>
 
-            {/* Book Appointment Button */}
+      
             <button className="bg-white hover:bg-gray-50 text-gray-800 font-semibold px-6 py-3.5 rounded-xl shadow-md border border-gray-100 flex items-center space-x-2 transition-all">
               <span>Book Appointment</span>
               <svg

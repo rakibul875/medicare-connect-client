@@ -2,6 +2,7 @@
 import { headers } from "next/headers"
 import { auth } from "../auth"
 import { redirect } from "next/navigation"
+import { handelGetSection } from "../action/serverGet"
 
 export const getUserSession=async()=>{
     const session= await auth.api.getSession({
@@ -20,4 +21,8 @@ export const roleBaseSession=async(role)=>{
   redirect('/unauthorize')
  }
  return user
+}
+
+export const getUser=async()=>{
+    return handelGetSection('/users')
 }

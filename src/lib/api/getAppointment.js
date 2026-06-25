@@ -15,3 +15,7 @@ export const getAppointmentByAppointmentId=async(appointId)=>{
 export const getTodayAppointment=async(doctorID)=>{
  return handelGetSection(`/today/appointment?doctorId=${doctorID}`)
 }
+
+export const getAppointment=async()=>{
+    return handelGetSection('/appointment')
+}
