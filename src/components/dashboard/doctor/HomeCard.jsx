@@ -2,9 +2,15 @@ import React from "react";
 import { Calendar, Users, DollarSign, Star } from "lucide-react";
 import { getUserSession } from "@/lib/api/getUsers";
 
-const HomeCard = async({totalAmount,totalPatient,todayAppointment}) => {
-  const user=await getUserSession()
-  const userName= user?.name
+const HomeCard = async ({
+  totalAmount,
+  totalPatient,
+  todayAppointment,
+  averageRating,
+ 
+}) => {
+  const user = await getUserSession();
+  const userName = user?.name;
   const analyticsData = [
     {
       title: "TODAY'S VISITS",
@@ -32,7 +38,7 @@ const HomeCard = async({totalAmount,totalPatient,todayAppointment}) => {
     },
     {
       title: "AVG. RATING",
-      value: "4.9 / 5",
+      value: `${averageRating}/ 5`,
       badge: "Top Rated",
       icon: <Star className="w-5 h-5 text-amber-500" fill="currentColor" />,
       iconBg: "bg-amber-50",
@@ -41,26 +47,25 @@ const HomeCard = async({totalAmount,totalPatient,todayAppointment}) => {
 
   return (
     <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8 bg-white">
-  
       <div className="space-y-1">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
           WelcomeBack, {userName}
         </h1>
         <p className="text-gray-500 text-sm sm:text-base font-medium">
           You have{" "}
-          <span className="text-gray-800 font-semibold">{todayAppointment}</span>{" "}
+          <span className="text-gray-800 font-semibold">
+            {todayAppointment}
+          </span>{" "}
           Visits for today.
         </p>
       </div>
 
-     
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {analyticsData.map((data, index) => (
           <div
             key={index}
             className="bg-gray-100 border border-gray-100 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[160px]"
           >
-       
             <div className="flex items-center justify-between w-full">
               <div
                 className={`${data.iconBg} p-3 rounded-2xl flex items-center justify-center`}
@@ -68,7 +73,6 @@ const HomeCard = async({totalAmount,totalPatient,todayAppointment}) => {
                 {data.icon}
               </div>
 
-    
               {data.change && (
                 <span className="text-[11px] font-bold text-[#014d34] bg-[#014d34]/5 px-2.5 py-1 rounded-lg">
                   {data.change}
@@ -80,7 +84,6 @@ const HomeCard = async({totalAmount,totalPatient,todayAppointment}) => {
                 </span>
               )}
             </div>
-
 
             <div className="mt-5 space-y-1">
               <span className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider">
