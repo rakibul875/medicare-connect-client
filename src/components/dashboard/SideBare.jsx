@@ -70,21 +70,21 @@ const SideBare = async () => {
       {
         icon: LayoutGrid,
         label: "Dashboard Overview",
-        path: "/admin/dashboard",
+        path: "/dashboard/admin",
       },
-      { icon: Users, label: "Manage Users", path: "/admin/users" },
-      { icon: HeartPulse, label: "Manage Doctors", path: "/admin/doctors" },
+      { icon: Users, label: "Manage Users", path: "/dashboard/admin/users" },
+      { icon: HeartPulse, label: "Manage Doctors", path: "/dashboard/admin/doctors" },
       {
         icon: Calendar,
         label: "Manage Appointments",
-        path: "/admin/appointments",
+        path: "/dashboard/admin/appointments",
       },
       {
         icon: CreditCard,
         label: "Payment Management",
-        path: "/admin/payments",
+        path: "/dashboard/admin/payments",
       },
-      { icon: BarChart3, label: "Analytics", path: "/admin/analytics" },
+      
     ],
   };
   const navItems = roleNavItems[user?.role || []];
