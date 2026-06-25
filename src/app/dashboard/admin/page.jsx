@@ -21,9 +21,9 @@ const AdminDashboard = async () => {
   for (let i = 0; i < payment.length; i++) {
     totalAmount += payment[i].amount;
   }
- 
-  const ratingBase= await getRating()
-  
+
+  const ratingBase = await getRating();
+
   return (
     <div>
       <DashboardAnalytics
@@ -32,7 +32,9 @@ const AdminDashboard = async () => {
         totalUser={totalUser}
         totalAmount={totalAmount}
       />
-      <RatingTable ratingBase={ratingBase}/>
+      <div className="my-10">
+        <RatingTable ratingBase={ratingBase} />
+      </div>
     </div>
   );
 };
