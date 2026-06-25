@@ -17,6 +17,9 @@ const Schedule = async () => {
   const currentDoctorProfile = allDoctors.find(
     (doctor) => doctor.doctorId === doctorId,
   );
+  if(!currentDoctorProfile){
+    redirect('/dashboard/doctor/profile')
+  }
   const schedules = (await getDoctorSchedule(doctorId)) || [];
 
   const isApprovedByAdmin =
