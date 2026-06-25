@@ -2,7 +2,7 @@
 
 import React from "react";
 import { User, Phone, Mail, Ban, Trash2, ShieldAlert } from "lucide-react";
-import { handelUserStatus } from "@/lib/post/user";
+import { handelUserStatus, userDelete } from "@/lib/post/user";
 import { useRouter } from "next/navigation";
 
 const PatientTable = ({ patients }) => {
@@ -15,7 +15,11 @@ const PatientTable = ({ patients }) => {
     }
   };
   const handelDelete = async (id) => {
-    alert(`button clicked ${id}`);
+    const res = await userDelete(id);
+    if (res.deletedCount > 0) {
+      alert("User deleted successfully");
+      router.refresh()
+    }
   };
 
   return (
