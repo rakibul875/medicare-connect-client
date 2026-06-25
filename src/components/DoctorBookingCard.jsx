@@ -9,6 +9,15 @@ const DoctorBookingCard = async ({ doctorId, doctor }) => {
   if (!user) {
     redirect("/login");
   }
+  if (user?.status === "suspend") {
+    return (
+      <div className="text-center p-10">
+        <h2 className="text-red-500 font-bold">
+          Your account has been suspended.
+        </h2>
+      </div>
+    );
+  }
   const doctorSchedule = await getDoctorSchedule(doctorId);
 
   if (!doctorSchedule || doctorSchedule.length === 0) {
@@ -32,14 +41,13 @@ const DoctorBookingCard = async ({ doctorId, doctor }) => {
       "Saturday",
     ];
     const today = new Date();
-    const currentDayIndex = today.getDay(); 
-    const targetDayIndex = daysOfWeek.indexOf(targetDayStr); 
+    const currentDayIndex = today.getDay();
+    const targetDayIndex = daysOfWeek.indexOf(targetDayStr);
 
     if (targetDayIndex === -1) return null;
 
     let daysUntilTarget = targetDayIndex - currentDayIndex;
 
-    
     if (daysUntilTarget < 0) {
       daysUntilTarget += 7;
     }
