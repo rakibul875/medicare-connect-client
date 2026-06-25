@@ -6,3 +6,7 @@ export const getPaymentHistory = async(userId)=>{
 export const getPaymentHistoryDoctor = async(doctorId)=>{
     return handelGetSection(`/my/subscription?doctorId=${doctorId}`)
 }
+
+export const getAllPaymentHistory=async()=>{
+    return handelGetSection('/subscription')
+}
