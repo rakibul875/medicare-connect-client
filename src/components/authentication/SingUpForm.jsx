@@ -12,6 +12,7 @@ import {
 } from "@heroui/react";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
+import { FaGoogle } from "react-icons/fa";
 
 const SingUpForm = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ const SingUpForm = () => {
     password: "",
     phone: "",
     gender: "",
-    status:'pending',
+    status: "pending",
   });
 
   const [imageFile, setImageFile] = useState(null);
@@ -71,15 +72,26 @@ const SingUpForm = () => {
 
     const finalUserData = {
       ...formData,
-      profilePhoto: imageUrl, 
+      profilePhoto: imageUrl,
       role: formData.role || "patient",
     };
-    console.log("form Data",finalUserData)
+    console.log("form Data", finalUserData);
     const { data, error } = await authClient.signUp.email({
       ...finalUserData,
     });
 
     console.log("Submitted Data object to Backend:", data);
+    if (data) {
+      alert("singUp Successful");
+    } else {
+      error.message;
+    }
+  };
+
+  const handelGoogleSignin = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
     if (data) {
       alert("singUp Successful");
     } else {
@@ -302,7 +314,6 @@ const SingUpForm = () => {
             </div>
           </div>
 
-          {/* Submit Action Button */}
           <div>
             <button
               type="submit"
@@ -315,6 +326,15 @@ const SingUpForm = () => {
             </button>
           </div>
         </form>
+        <div className="">
+          <h1 className="text-center text-slate-500">Or</h1>
+          <button
+            onClick={handelGoogleSignin}
+            className="btn items-center shadow-sm w-full rounded-full bg-slate-200"
+          >
+            <FaGoogle className="text-red-500 text-sm" /> Google
+          </button>
+        </div>
       </div>
     </div>
   );

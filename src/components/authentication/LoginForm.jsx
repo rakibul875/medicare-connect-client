@@ -1,8 +1,10 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import { Button } from "@heroui/react";
 import Link from "next/link";
 import React, { useState } from "react";
+import { FaGoogle } from "react-icons/fa";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -19,20 +21,22 @@ const LoginForm = () => {
       email: formData.email,
       password: formData.password,
     });
-    if(data){
-        alert('sinIn successful')
-    }
-    else{
-        console.log("error",error.message)
-        alert(error.message)
-        
+    if (data) {
+      alert("sinIn successful");
+    } else {
+      console.log("error", error.message);
+      alert(error.message);
     }
   };
+
+  const handelGoogleLogin=async()=>{
+
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-md border border-gray-100">
-        {/* Header / Brand Title */}
+     
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-[#006694]">
             Welcome Back
@@ -160,6 +164,7 @@ const LoginForm = () => {
             </button>
           </div>
         </form>
+
         <div className="text-center mt-6">
           <p>
             You don`t have an account?{" "}
@@ -170,6 +175,12 @@ const LoginForm = () => {
               Sign up
             </Link>
           </p>
+        </div>
+        <div className="">
+          <h1 className="text-center text-slate-400">Or</h1>
+           <button onClick={handelGoogleLogin} className="btn items-center shadow-sm w-full rounded-full bg-slate-200">
+            <FaGoogle className="text-red-500 text-sm" /> Google
+          </button>
         </div>
       </div>
     </div>
