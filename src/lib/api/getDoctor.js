@@ -1,7 +1,7 @@
-import { handelGetSection } from "../action/serverGet";
+import { handelGetSection, protectedFetch } from "../action/serverGet";
 
 export const getDoctor = () => {
-  return handelGetSection("/doctor");
+  return protectedFetch("/doctor");
 };
 
 export const getDoctorById = async (id) => {
