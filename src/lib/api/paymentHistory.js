@@ -1,10 +1,10 @@
-import { handelGetSection } from "../action/serverGet"
+import { handelGetSection, protectedFetch } from "../action/serverGet"
 
 export const getPaymentHistory = async(userId)=>{
-    return handelGetSection(`/my/subscription?userId=${userId}`)
+    return protectedFetch(`/my/subscription?userId=${userId}`)
 }
 export const getPaymentHistoryDoctor = async(doctorId)=>{
-    return handelGetSection(`/my/subscription?doctorId=${doctorId}`)
+    return protectedFetch(`/my/subscription?doctorId=${doctorId}`)
 }
 
 export const getAllPaymentHistory=async()=>{

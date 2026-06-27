@@ -1,5 +1,5 @@
-import { handelGetSection } from "../action/serverGet"
+import { handelGetSection, protectedFetch } from "../action/serverGet"
 
 export const handelGetFavorite=(userId)=>{
- return handelGetSection(`/my/favorite?userId=${userId}`)
+ return protectedFetch(`/my/favorite?userId=${userId}`)
 }
