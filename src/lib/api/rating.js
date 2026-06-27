@@ -1,5 +1,5 @@
-import { handelGetSection } from "../action/serverGet"
+import { handelGetSection, protectedFetch } from "../action/serverGet"
 
 export const  getRating=()=>{
-    return handelGetSection('/analytics/top-doctors')
+    return protectedFetch('/analytics/top-doctors')
 }
