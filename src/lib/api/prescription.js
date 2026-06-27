@@ -1,6 +1,6 @@
-import { handelGetSection } from "../action/serverGet"
+import { handelGetSection, protectedFetch } from "../action/serverGet"
 
 export const getDoctorPrescription=async(doctorId)=>{
-    return handelGetSection(`/my/prescription?doctorId=${doctorId}`)
+    return protectedFetch(`/my/prescription?doctorId=${doctorId}`)
 }
 
