@@ -29,6 +29,7 @@ export const dataDelete=async(path)=>{
     method:'DELETE',
     headers:{
       "Content-type": "application/json",
+      ...await authHeader()
     }
   })
   return res.json()
