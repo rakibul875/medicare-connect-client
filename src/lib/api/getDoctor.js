@@ -1,4 +1,4 @@
-import { handelGetSection, protectedFetch } from "../action/serverGet";
+import { handelGetSection, } from "../action/serverGet";
 
 export const getDoctor = () => {
   return handelGetSection("/doctor");
@@ -11,3 +11,11 @@ export const getDoctorById = async (id) => {
 export const lastDoctor = async () => {
   return handelGetSection("/doctors");
 };
+export const handelPageNationGet = async (page) => {
+  if (!page) {
+    page = 1;
+  }
+  return handelGetSection(`/all/doctors?page=${page}`);
+};
+
+
