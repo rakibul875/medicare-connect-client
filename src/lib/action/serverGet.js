@@ -1,7 +1,7 @@
 import { authHeader } from "./serverPost"
 
 export const handelGetSection=async(path)=>{
- const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}${path}`)
+ const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}${path}`,{cache:'no-store'})
  return await res.json()
 }
 
