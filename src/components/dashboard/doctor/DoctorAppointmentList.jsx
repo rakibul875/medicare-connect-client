@@ -6,13 +6,14 @@ import {
 import { useRouter } from "next/navigation";
 import React from "react";
 import PrescriptionForm from "./PrescriptionForm";
+import toast from "react-hot-toast";
 
 const DoctorAppointmentList = ({ appointments }) => {
   const router = useRouter();
   const handleApprove = async (id) => {
     const res = await handelStatusByDoctor(id);
     if (res.modifiedCount > 0) {
-      alert("Appointment Approve");
+      toast.success("Appointment Approve");
       router.refresh();
     }
   };
@@ -20,7 +21,7 @@ const DoctorAppointmentList = ({ appointments }) => {
   const handleReject = async (id) => {
     const res = await handelStatusRejectedByDoctor(id);
     if (res.modifiedCount > 0) {
-      alert("Appointment Rejected");
+      toast.error("Appointment Rejected");
       router.refresh();
     }
   };

@@ -2,11 +2,12 @@
 import React from "react";
 import { FaStar } from "react-icons/fa";
 import EditReview from "./EditReview";
+import toast from "react-hot-toast";
 
 const UserReviewList = ({ reviews }) => {
   const handleEditReview = (reviewId) => {
     console.log("Editing Review ID:", reviewId);
-    alert(`Opening edit handler for Review ID: ${reviewId}`);
+    toast.success(`Opening edit handler for Review ID: ${reviewId}`);
   };
 
   return (
@@ -74,7 +75,7 @@ const UserReviewList = ({ reviews }) => {
                   Appt: #{item.appointmentId?.slice(-5)}
                 </span>
 
-                <EditReview reviewId={item._id}/>
+                <EditReview reviewId={item._id} />
               </div>
             </div>
           );

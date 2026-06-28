@@ -2,6 +2,7 @@
 import { updateDoctorStatus } from "@/lib/post/doctor-profile";
 import { useRouter } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
 
 const DoctorTable = ({ initialDoctors = [] }) => {
   const router = useRouter();
@@ -10,7 +11,7 @@ const DoctorTable = ({ initialDoctors = [] }) => {
       verificationStatus: "approved",
     });
     if (res.modifiedCount > 0) {
-      alert(`Doctor Approved Successful`);
+      toast.success(`Doctor Approved Successful`);
       router.refresh();
     }
   };
@@ -20,7 +21,7 @@ const DoctorTable = ({ initialDoctors = [] }) => {
       verificationStatus: "rejected",
     });
     if (res.modifiedCount > 0) {
-      alert(`Doctor Rejected Successful`);
+      toast.success(`Doctor Rejected Successful`);
       router.refresh();
     }
   };

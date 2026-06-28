@@ -4,6 +4,7 @@ import { authClient } from "@/lib/auth-client";
 import { Button } from "@heroui/react";
 import Link from "next/link";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
 
 const LoginForm = () => {
@@ -22,10 +23,10 @@ const LoginForm = () => {
       password: formData.password,
     });
     if (data) {
-      alert("sinIn successful");
+      toast.success("sinIn successful");
     } else {
       console.log("error", error.message);
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -34,9 +35,9 @@ const LoginForm = () => {
       provider: "google",
     });
     if (data) {
-      alert("singUp Successful");
+      toast.success("singUp Successful");
     } else {
-      error.message;
+      toast.error(error.message)
     }
   };
 

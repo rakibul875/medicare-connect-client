@@ -4,6 +4,7 @@ import { AlertDialog, Button } from "@heroui/react";
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
 
 const ScheduleDelete = ({ doctorId, day }) => {
   const router = useRouter();
@@ -11,10 +12,10 @@ const ScheduleDelete = ({ doctorId, day }) => {
   const handelDelete = async () => {
     const res = await dataDelete(`/schedule?doctorId=${doctorId}&day=${day}`);
     if (res.success) {
-      alert(res.message || "Deleted successfully!");
+      toast.success(res.message || "Deleted successfully!");
       router.refresh();
     } else {
-      alert(res.message || "Failed to delete!");
+      toast.error(res.message || "Failed to delete!");
     }
   };
 

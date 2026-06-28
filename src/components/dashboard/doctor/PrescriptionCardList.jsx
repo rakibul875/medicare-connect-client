@@ -4,9 +4,7 @@ import PrescriptionEditForm from "./PrescriptionEditForm";
 
 
 const PrescriptionCardList = ({ prescriptions }) => {
-  // const handleEdit = (id) => {
-  //   alert(`Redirecting or opening modal to edit prescription ID: ${id}`);
-  // };
+
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

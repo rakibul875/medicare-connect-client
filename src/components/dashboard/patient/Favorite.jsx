@@ -2,6 +2,7 @@ import { authClient } from "@/lib/auth-client";
 import { handelPostFavorite } from "@/lib/post/review";
 import { AlertRoot } from "@heroui/react";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const Favorite = ({ appointmentId }) => {
      const [appointment, setAppointment] = useState({});
@@ -28,10 +29,10 @@ const Favorite = ({ appointmentId }) => {
     console.log('After button clicked', data)
     const res= await handelPostFavorite(data)
     if(res.insertedId){
-        alert('Add Favorite Successful')
+        toast.success('Add Favorite Successful')
     }
     if(res.success===false){
-        alert(res.message)
+        toast.error(res.message)
     }
   }
   

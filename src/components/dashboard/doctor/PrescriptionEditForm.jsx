@@ -12,6 +12,7 @@ import {
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaRegEdit } from "react-icons/fa";
 
 const PrescriptionEditForm = ({ prescriptionId }) => {
@@ -35,7 +36,7 @@ const PrescriptionEditForm = ({ prescriptionId }) => {
     const updateData = Object.fromEntries(formData.entries());
     const res = await handelPrescriptionPatch(prescriptionId, updateData);
     if (res.modifiedCount > 0) {
-      alert("Prescription Update Successful");
+      toast.success("Prescription Update Successful");
       router.refresh();
     }
   };

@@ -16,6 +16,7 @@ import {
 import { authClient } from "@/lib/auth-client";
 import { doctorProfile } from "@/lib/post/doctor-profile";
 import DoctorCreateForm from "./DoctorCreateForm";
+import toast from "react-hot-toast";
 
 
 export default function ProfileForm({ doctorId, doctor, onSaveProfile }) {
@@ -50,11 +51,11 @@ export default function ProfileForm({ doctorId, doctor, onSaveProfile }) {
       const result = await response.json();
       if (result.success) {
         setImageUrl(result.data.url);
-        alert("Image uploaded successfully to ImgBB!");
+        toast.success("Image uploaded successfully to ImgBB!");
       }
     } catch (error) {
       console.error("ImgBB Upload Error:", error);
-      alert("Failed to upload image.");
+      toast.error("Failed to upload image.");
     } finally {
       setIsUploading(false);
     }
@@ -78,7 +79,7 @@ export default function ProfileForm({ doctorId, doctor, onSaveProfile }) {
 
     const res = await doctorProfile(newDoctorData);
     if (res?.insertedId) {
-      alert("Submit Successful");
+      toast.success("Submit Successful");
       setCurrentDoctor(newDoctorData); 
       setIsSubmitted(true);
 

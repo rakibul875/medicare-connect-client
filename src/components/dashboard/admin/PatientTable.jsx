@@ -4,21 +4,22 @@ import React from "react";
 import { User, Phone, Mail, Ban, Trash2, ShieldAlert } from "lucide-react";
 import { handelUserStatus, userDelete } from "@/lib/post/user";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const PatientTable = ({ patients }) => {
   const router = useRouter();
   const handelSuspend = async (id) => {
     const res = await handelUserStatus(id, { status: "suspend" });
     if (res.modifiedCount > 0) {
-      alert(`User Suspend Successful`);
+      toast.success(`User Suspend Successful`);
       router.refresh();
     }
   };
   const handelDelete = async (id) => {
     const res = await userDelete(id);
     if (res.deletedCount > 0) {
-      alert("User deleted successfully");
-      router.refresh()
+      toast.success("User deleted successfully");
+      router.refresh();
     }
   };
 

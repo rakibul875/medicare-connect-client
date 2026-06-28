@@ -15,6 +15,7 @@ import {
 import { router } from "better-auth/api";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const PrescriptionForm = ({ appointmentId }) => {
   const [appointment, setAppointment] = useState(null || {});
@@ -51,11 +52,11 @@ const PrescriptionForm = ({ appointmentId }) => {
     setPrescription(fullPayload);
     const res = await handelPrescriptionData(fullPayload);
     if (res.insertedId) {
-      alert("prescription Add successful");
+      toast.success("prescription Add successful");
       router.refresh()
     }
     if (res.success === false) {
-      alert(`${res.message}`);
+      toast.error(`${res.message}`);
     }
   };
 

@@ -5,6 +5,7 @@ import { Button, Label, Modal, Surface, TextArea } from "@heroui/react";
 
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaRegEdit, FaStar } from "react-icons/fa";
 
 const EditReview = ({ reviewId }) => {
@@ -33,7 +34,7 @@ const EditReview = ({ reviewId }) => {
     };
     const res = await handelReviewPatch(reviewId, newData);
     if (res.modifiedCount > 0) {
-      alert("Review Update Success Ful");
+      toast.success("Review Update Success Ful");
       router.refresh()
     }
   };

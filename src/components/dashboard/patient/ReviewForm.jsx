@@ -5,6 +5,7 @@ import { Envelope } from "@gravity-ui/icons";
 import { Button, Label, Modal, Surface, TextArea } from "@heroui/react";
 
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
 
 const ReviewForm = ({ appointmentId }) => {
@@ -33,7 +34,7 @@ const ReviewForm = ({ appointmentId }) => {
     const formValues = Object.fromEntries(formData.entries());
 
     if (rating === 0) {
-      alert("Please select a star rating!");
+      toast.error("Please select a star rating!");
       return;
     }
 
@@ -44,15 +45,15 @@ const ReviewForm = ({ appointmentId }) => {
       userImage: user.profilePhoto,
       userId: user.id,
       doctorName: appointment.doctorName,
-      appointmentId:appointmentId
+      appointmentId: appointmentId,
     };
-   
+
     const res = await handelPostReview(reviewPayload);
     if (res.insertedId) {
-      alert(`Thank you for your ${reviewPayload.rating}-star review!`);
+      toast.success(`Thank you for your ${reviewPayload.rating}-star review!`);
     }
-    if(res.success===false){
-      alert(res.message)
+    if (res.success === false) {
+      toast.error(res.message);
     }
   };
 

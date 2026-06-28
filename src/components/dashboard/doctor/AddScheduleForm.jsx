@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Clock, Plus, Save } from "lucide-react";
 import { handelScheduleList } from "@/lib/post/doctorSchedule";
+import toast from "react-hot-toast";
 
 const AddScheduleForm = ({ doctorId }) => {
   const [selectedDays, setSelectedDays] = useState([]);
@@ -37,15 +38,15 @@ const AddScheduleForm = ({ doctorId }) => {
 
   const handleAddSlot = () => {
     if (selectedDays.length === 0) {
-      alert("Please select at least one day first!");
+      toast.error("Please select at least one day first!");
       return;
     }
     if (!selectedTime) {
-      alert("Please select a valid time slot first!");
+      toast.error("Please select a valid time slot first!");
       return;
     }
     if (slotsList.includes(selectedTime)) {
-      alert("This slot is already added.");
+      toast.error("This slot is already added.");
       return;
     }
     setSlotsList([...slotsList, selectedTime]);
@@ -53,11 +54,11 @@ const AddScheduleForm = ({ doctorId }) => {
 
   const handleSaveSchedule = async () => {
     if (selectedDays.length === 0) {
-      alert("Please select at least one day!");
+      toast.error("Please select at least one day!");
       return;
     }
     if (slotsList.length === 0) {
-      alert("Please add at least one time slot before saving!");
+      toast.error("Please add at least one time slot before saving!");
       return;
     }
 
@@ -66,13 +67,12 @@ const AddScheduleForm = ({ doctorId }) => {
       day: day,
       slots: slotsList,
     }));
-    
 
     const res = await handelScheduleList(formattedScheduleList);
     if (res.success === false) {
-      alert(res.message);
+      toast.error(res.message);
     } else if (res.insertedCount > 0) {
-      alert("Schedule Added successfully!");
+      toast.success("Schedule Added successfully!");
       setSelectedDays([]);
       setSlotsList([]);
       setSelectedTime("");

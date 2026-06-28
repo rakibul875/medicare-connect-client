@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Clock, Plus, Save, Calendar, X, Pencil } from "lucide-react";
 import { handelScheduleUpdate } from "@/lib/post/doctorSchedule";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const UpdateScheduleForm = ({ day, schedule }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,15 +59,15 @@ const UpdateScheduleForm = ({ day, schedule }) => {
     e.preventDefault();
 
     if (selectedDays.length === 0) {
-      alert("Please select at least one day first!");
+      toast.error("Please select at least one day first!");
       return;
     }
     if (!selectedTime) {
-      alert("Please select a valid time slot first!");
+      toast.error("Please select a valid time slot first!");
       return;
     }
     if (slotsList.includes(selectedTime)) {
-      alert("This slot is already added.");
+      toast.error("This slot is already added.");
       return;
     }
     setSlotsList([...slotsList, selectedTime]);
@@ -77,11 +78,11 @@ const UpdateScheduleForm = ({ day, schedule }) => {
     e.preventDefault();
 
     if (selectedDays.length === 0) {
-      alert("Please select at least one day!");
+      toast.error("Please select at least one day!");
       return;
     }
     if (slotsList.length === 0) {
-      alert("Please add at least one time slot before saving!");
+      toast.error("Please add at least one time slot before saving!");
       return;
     }
 
@@ -100,10 +101,10 @@ const UpdateScheduleForm = ({ day, schedule }) => {
       formattedScheduleList,
     );
     if (res.success) {
-      alert("Time slots updated successfully!");
+      toast.success("Time slots updated successfully!");
       router.refresh();
     } else {
-      alert(res.message || "Something went wrong!");
+      toast.error(res.message || "Something went wrong!");
     }
 
     handleCloseModal();

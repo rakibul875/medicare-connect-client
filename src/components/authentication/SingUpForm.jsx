@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { FaGoogle } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const SingUpForm = () => {
   const [formData, setFormData] = useState({
@@ -56,12 +57,12 @@ const SingUpForm = () => {
 
       if (result.success) {
         setImageUrl(result.data.url);
-        alert("Photo uploaded successfully");
+        toast.success("Photo uploaded successfully");
       } else {
-        alert("Image upload failed. Try again.");
+        toast.error("Image upload failed. Try again.");
       }
     } catch (error) {
-      alert("Network error during image upload.");
+      toast.error("Network error during image upload.");
     } finally {
       setLoading(false);
     }
@@ -82,9 +83,9 @@ const SingUpForm = () => {
 
     console.log("Submitted Data object to Backend:", data);
     if (data) {
-      alert("singUp Successful");
+      toast.success("singUp Successful");
     } else {
-      error.message;
+      toast.error(error.message);
     }
   };
 
@@ -93,9 +94,9 @@ const SingUpForm = () => {
       provider: "google",
     });
     if (data) {
-      alert("singUp Successful");
+      toast.success("singUp Successful");
     } else {
-      error.message;
+     toast.error( error.message);
     }
   };
 

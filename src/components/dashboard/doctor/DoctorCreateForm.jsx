@@ -17,6 +17,7 @@ import { Envelope } from "@gravity-ui/icons";
 import { updateDoctorProfile } from "@/lib/post/doctor-profile";
 import { router } from "better-auth/api";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function DoctorCreateForm({ doctor }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,11 +48,11 @@ export default function DoctorCreateForm({ doctor }) {
       const result = await response.json();
       if (result.success) {
         setImageUrl(result.data.url);
-        alert("Image uploaded successfully to ImgBB!");
+        toast.success("Image uploaded successfully to ImgBB!");
       }
     } catch (error) {
       console.error("ImgBB Upload Error:", error);
-      alert("Failed to upload image.");
+      toast.error("Failed to upload image.");
     } finally {
       setIsUploading(false);
     }
@@ -75,7 +76,7 @@ export default function DoctorCreateForm({ doctor }) {
 
     const res = await updateDoctorProfile(doctor?._id, doctorFormData);
     if (res.modifiedCount > 0) {
-      alert("Profile Update Successful!");
+      toast.error("Profile Update Successful!");
       router.refresh();
     }
     setIsOpen(false);
