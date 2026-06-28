@@ -1,8 +1,10 @@
+"use client"; 
+
 import React from "react";
 import Link from "next/link";
+import { motion } from "framer-motion"; 
 
 const MedicalSpecializations = () => {
-  
   const specializations = [
     {
       name: "Cardiology",
@@ -111,23 +113,41 @@ const MedicalSpecializations = () => {
     },
   ];
 
+ 
+  const gridVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 },
+    },
+  };
+
+  
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 100, damping: 15 },
+    },
+  };
+
   return (
     <section className="bg-white py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-   
+     
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-2">
         <div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#006694] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-black text-[#006694] tracking-tight">
             Medical Specializations
           </h2>
-          <p className="text-gray-500 text-sm mt-1 font-medium">
+          <p className="text-gray-400 text-xs sm:text-sm mt-1 font-medium">
             Find experts across all medical disciplines
           </p>
         </div>
 
-      
         <Link
           href="/specializations"
-          className="inline-flex items-center space-x-1 text-sm font-bold text-[#006694] hover:text-[#00557c] transition-colors group self-start sm:self-center"
+          className="inline-flex items-center space-x-1 text-xs sm:text-sm font-black text-[#006694] hover:text-[#00557c] transition-colors group self-start sm:self-center"
         >
           <span>View All</span>
           <svg
@@ -147,23 +167,33 @@ const MedicalSpecializations = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      <motion.div
+        variants={gridVariants}
+        initial="hidden"
+        whileInView="visible" 
+        viewport={{ once: true, margin: "-100px" }} 
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
+      >
         {specializations.map((item, idx) => (
-          <div
+          <motion.div
             key={idx}
-            className="bg-gray-200 rounded-2xl border border-gray-100 p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
+            variants={cardVariants}
+            whileHover={{ y: -8, scale: 1.03 }} 
+            whileTap={{ scale: 0.98 }}
+            className="bg-white rounded-[2rem] border border-slate-100 p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer group"
           >
-       
+            
             <div className="bg-[#006694]/5 text-[#006694] p-4 rounded-2xl mb-4 group-hover:bg-[#006694] group-hover:text-white transition-colors duration-300">
               {item.icon}
             </div>
 
-            <span className="text-sm font-bold text-gray-800 tracking-tight group-hover:text-[#006694] transition-colors">
+          
+            <span className="text-xs sm:text-sm font-black text-slate-800 tracking-tight group-hover:text-[#006694] transition-colors">
               {item.name}
             </span>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };
