@@ -1,36 +1,168 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🏥 MediCare Connect – Hospital Appointment & Healthcare Management System
 
-## Getting Started
+MediCare Connect is a modern, secure, and feature-rich healthcare management platform built with the MERN stack. It streamlines the entire appointment process by connecting **Patients**, **Doctors**, and **Administrators** through a powerful role-based authentication system. The platform enables secure appointment booking, online payments, prescription management, doctor verification, and comprehensive healthcare administration—all within an intuitive and responsive interface.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Live Demo & Links
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* **🌐 Live Client Application:** https://your-client-live-url.vercel.app
+* **⚙️ Live Server API:** https://your-server-live-url.vercel.app
+* **📂 Client Repository:** https://github.com/rakibul875/medicare-connect-client
+* **📂 Server Repository:** https://github.com/rakibul875/medicare-connect-server
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✨ Features
 
-## Learn More
+### 🔐 Authentication & Security
 
-To learn more about Next.js, take a look at the following resources:
+* Secure **Role-Based Authentication** for **Admin**, **Doctor**, and **Patient**.
+* Authentication powered by **BetterAuth**.
+* **JWT-secured** backend APIs.
+* Protected Dashboard Routes.
+* Secure Middleware & Authorization.
+* Environment Variable Protection.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 👨‍⚕️ Doctor Dashboard
 
-## Deploy on Vercel
+* Create and manage doctor profile.
+* Update personal and professional information.
+* Publish available schedules.
+* View incoming appointment requests.
+* Approve or reject appointment requests.
+* Create digital prescriptions for patients.
+* View payment history.
+* Access personalized dashboard analytics.
+* Doctors cannot publish schedules until approved by the administrator.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 👤 Patient Dashboard
+
+* Browse available doctors.
+* Book appointments securely.
+* Online payment with **Stripe Checkout**.
+* Cancel booked appointments.
+* View appointment history.
+* Track payment history.
+* Add doctors to favorites.
+* Submit doctor reviews and ratings.
+* Manage personal profile and dashboard.
+
+---
+
+### 👨‍💼 Admin Dashboard
+
+* Approve or reject doctor registrations.
+* Suspend user accounts.
+* Delete users.
+* Manage doctors and patients.
+* Monitor overall platform activities.
+* Access administrative dashboard analytics.
+
+---
+
+### 💳 Payment System
+
+* Secure payment integration using **Stripe**.
+* Instant appointment confirmation after successful payment.
+* Complete payment history for patients and doctors.
+* Secure checkout experience.
+
+---
+
+### 💊 Prescription Management
+
+* Doctors can generate digital prescriptions.
+* Patients can access their prescriptions.
+* Organized patient treatment records.
+
+---
+
+### ⭐ Review & Favorite System
+
+* Patients can rate doctors.
+* Leave reviews after appointments.
+* Add doctors to their favorites list.
+
+---
+
+## 🛠️ Tech Stack & Architecture
+
+### 🎨 Frontend (Client-Side)
+
+* **Framework:** Next.js (App Router)
+* **Library:** React.js
+* **Styling:** Tailwind CSS
+* **UI Components:** HeroUI
+* **Authentication:** BetterAuth
+* **Animations:** Framer Motion
+* **Icons:** React Icons & Lucide React
+* **Notifications:** SweetAlert2
+* **HTTP Client:** Axios
+
+---
+
+### ⚙️ Backend (Server-Side)
+
+* **Runtime:** Node.js
+* **Framework:** Express.js
+* **Database:** MongoDB Atlas
+* **Authentication:** JWT (JSON Web Token)
+* **Payment Gateway:** Stripe
+* **Security:** CORS, Environment Variables
+* **API Architecture:** RESTful API
+
+---
+
+## 📈 Core Functionalities
+
+* Role-Based Authentication
+* Doctor Verification System
+* Appointment Booking System
+* Stripe Payment Integration
+* Digital Prescription Management
+* Doctor Schedule Management
+* Favorite Doctor System
+* Review & Rating System
+* Payment History Tracking
+* Responsive Dashboard
+* Secure Protected APIs
+
+---
+
+## 📱 Responsive Design
+
+* Fully Responsive Layout
+* Mobile Friendly
+* Tablet Optimized
+* Desktop Optimized
+* Modern UI/UX Design
+
+---
+
+## 🚀 Future Improvements
+
+* Video Consultation
+* Email Notifications
+* SMS Appointment Reminders
+* PDF Prescription Download
+* AI-Based Health Assistant
+* Multi-language Support
+
+---
+
+## 👨‍💻 Developed By
+
+**Rakibul Islam Ashik**
+
+GitHub: https://github.com/rakibul875
+
+---
+
+## ⭐ Support
+
+If you like this project, don't forget to **⭐ Star** the repository and share your feedback!
