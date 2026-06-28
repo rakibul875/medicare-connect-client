@@ -1,7 +1,9 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 
 const WhyChoose = () => {
-
   const features = [
     {
       title: "Secure Records",
@@ -125,43 +127,81 @@ const WhyChoose = () => {
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.05 },
+    },
+  };
+
+  const headerVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 80, damping: 20 },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 100, damping: 18 },
+    },
+  };
+
   return (
-    <section className="bg-white py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-    
-      <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-        <h2 className="text-3xl sm:text-4xl font-bold text-[#006694] tracking-tight">
+    <section className="bg-white py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={headerVariants}
+        className="text-center max-w-2xl mx-auto mb-16 space-y-3"
+      >
+        <h2 className="text-3xl sm:text-4xl font-black text-[#006694] tracking-tight">
           Clinical Excellence, Digital Calm
         </h2>
-        <p className="text-gray-500 text-sm sm:text-base font-medium leading-relaxed">
+        <p className="text-gray-400 text-xs sm:text-base font-medium leading-relaxed">
           Providing a seamless healthcare journey through innovative technology
           and empathetic care.
         </p>
-      </div>   
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      </motion.div>
+
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      >
         {features.map((feature, index) => (
-          <div
+          <motion.div
             key={index}
-            className="bg-gray-200 rounded-[2rem] border border-gray-100 p-8 flex flex-col items-start justify-between shadow-sm hover:shadow-md transition-all duration-300 group"
+            variants={cardVariants}
+            whileHover={{ y: -6, scale: 1.02 }}
+            whileTap={{ scale: 0.99 }}
+            className="bg-white rounded-[2.5rem] border border-slate-100 p-8 flex flex-col items-start justify-between shadow-sm hover:shadow-md transition-all duration-300 group cursor-default"
           >
             <div>
-           
               <div className="bg-[#006694]/5 text-[#006694] p-3.5 rounded-2xl mb-6 inline-block group-hover:bg-[#006694] group-hover:text-white transition-colors duration-300">
                 {feature.icon}
               </div>
 
-           
-              <h3 className="text-lg font-bold text-gray-900 tracking-tight mb-3">
+              <h3 className="text-base sm:text-lg font-black text-slate-800 tracking-tight mb-3">
                 {feature.title}
               </h3>
 
-              
-              <p className="text-gray-500 text-sm font-medium leading-relaxed">
+              <p className="text-gray-400 text-xs sm:text-sm font-medium leading-relaxed">
                 {feature.desc}
               </p>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };
