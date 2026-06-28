@@ -14,6 +14,7 @@ import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { FaGoogle } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const SingUpForm = () => {
   const [formData, setFormData] = useState({
@@ -28,6 +29,7 @@ const SingUpForm = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -84,6 +86,7 @@ const SingUpForm = () => {
     console.log("Submitted Data object to Backend:", data);
     if (data) {
       toast.success("singUp Successful");
+      router.push("/");
     } else {
       toast.error(error.message);
     }
@@ -96,7 +99,7 @@ const SingUpForm = () => {
     if (data) {
       toast.success("singUp Successful");
     } else {
-     toast.error( error.message);
+      toast.error(error.message);
     }
   };
 

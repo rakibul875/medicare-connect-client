@@ -3,6 +3,7 @@
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@heroui/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
@@ -10,6 +11,7 @@ import { FaGoogle } from "react-icons/fa";
 const LoginForm = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const router= useRouter()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +26,7 @@ const LoginForm = () => {
     });
     if (data) {
       toast.success("sinIn successful");
+      router.push('/')
     } else {
       console.log("error", error.message);
       toast.error(error.message);
