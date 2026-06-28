@@ -6,8 +6,8 @@ MediCare Connect is a modern, secure, and feature-rich healthcare management pla
 
 ## 🚀 Live Demo & Links
 
-* **🌐 Live Client Application:** https://your-client-live-url.vercel.app
-* **⚙️ Live Server API:** https://your-server-live-url.vercel.app
+* **🌐 Live Client Application:** https://medicare-connect-client-pi.vercel.app
+* **⚙️ Live Server API:** https://medicare-connect-server-sigma.vercel.app
 * **📂 Client Repository:** https://github.com/rakibul875/medicare-connect-client
 * **📂 Server Repository:** https://github.com/rakibul875/medicare-connect-server
 
