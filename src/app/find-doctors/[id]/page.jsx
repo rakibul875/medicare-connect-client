@@ -2,7 +2,9 @@ import DoctorBookingCard from "@/components/DoctorBookingCard";
 import DoctorDetailsCard from "@/components/DoctorDetailsCard";
 import { getDoctorById } from "@/lib/api/getDoctor";
 import React from "react";
-
+export const metadata = {
+  title: "Booking Doctor",
+}
 const DoctorDetails = async ({ params }) => {
   const { id } = await params;
   const doctor = await getDoctorById(id);

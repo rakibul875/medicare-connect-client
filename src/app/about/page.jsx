@@ -8,6 +8,10 @@ import {
   Activity,
 } from "lucide-react";
 
+export const metadata = {
+  title: "MediCare About",
+}
+
 const AboutPage = () => {
   const hospitalStats = [
     { label: "Expert Medical Consultants", value: "150+" },

@@ -1,6 +1,10 @@
 import React from "react";
 import { Mail, Phone, MapPin, Clock, Send, ShieldCheck } from "lucide-react";
 
+export const metadata = {
+  title: "MediCare Connect",
+}
+
 const ContactPage = () => {
   return (
     <div className="w-full bg-slate-50/50 min-h-screen py-12 px-4 sm:px-6 lg:px-8">

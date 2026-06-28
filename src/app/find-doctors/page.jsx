@@ -1,7 +1,9 @@
 import FindDoctor from "@/components/FindDoctor";
 import { getDoctor,  } from "@/lib/api/getDoctor";
 import React from "react";
-
+export const metadata = {
+  title: "MediCare Find-Doctor",
+}
 const FindDoctorsPage = async () => {
   
   const doctorData = await getDoctor();
