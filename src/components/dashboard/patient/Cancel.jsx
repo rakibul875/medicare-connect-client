@@ -4,13 +4,14 @@ import { AlertDialog, Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
 ;
 import React from "react";
+import toast from "react-hot-toast";
 
 const Cancel = ({id}) => {
      const router = useRouter()
   const handleCancel = async (cancelId) => {
     const res= await handelAppointmentStatus(cancelId);
     if(res.modifiedCount>0){
-        alert("Appointment Canceled Successful")
+        toast.success("Appointment Canceled Successful")
         router.refresh()
     }
   };
