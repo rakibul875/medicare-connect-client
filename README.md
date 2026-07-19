@@ -82,6 +82,15 @@ MediCare Connect is a modern, secure, and feature-rich healthcare management pla
 
 ---
 
+### 🤖 AI Health Assistant
+
+* 24/7 AI-powered health companion built directly into the platform.
+* Answers general health queries and helps navigate the hospital system.
+* Context-aware floating chat widget accessible from any page.
+* Powered by Google's Gemini AI.
+
+---
+
 ### ⭐ Review & Favorite System
 
 * Patients can rate doctors.
@@ -109,10 +118,11 @@ MediCare Connect is a modern, secure, and feature-rich healthcare management pla
 ### ⚙️ Backend (Server-Side)
 
 * **Runtime:** Node.js
-* **Framework:** Express.js
+* **Framework:** Express.js & Next.js API Routes
 * **Database:** MongoDB Atlas
 * **Authentication:** JWT (JSON Web Token)
 * **Payment Gateway:** Stripe
+* **AI Integration:** Google Gemini API (@google/genai)
 * **Security:** CORS, Environment Variables
 * **API Architecture:** RESTful API
 
@@ -130,6 +140,7 @@ MediCare Connect is a modern, secure, and feature-rich healthcare management pla
 * Review & Rating System
 * Payment History Tracking
 * Responsive Dashboard
+* AI-Powered Health Assistant
 * Secure Protected APIs
 
 ---
@@ -150,7 +161,6 @@ MediCare Connect is a modern, secure, and feature-rich healthcare management pla
 * Email Notifications
 * SMS Appointment Reminders
 * PDF Prescription Download
-* AI-Based Health Assistant
 * Multi-language Support
 
 ---
