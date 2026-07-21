@@ -152,12 +152,12 @@ export default async function Success({ searchParams }) {
           <div className="pt-6 border-t border-slate-100">
             <p className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider">
               Need immediate assistance?{" "}
-              <a
+              <Link
                 href="mailto:support@hospital.com"
                 className="text-[#006694] underline hover:text-[#00557c]"
               >
                 Contact Desk
-              </a>
+              </Link>
             </p>
           </div>
         </div>
