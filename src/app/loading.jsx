@@ -5,7 +5,7 @@ const Loading = () => {
     <div className="container mx-auto mt-20 mb-10 px-4 min-h-screen">
       <div className="bg-[#f4f8fa] rounded-2xl p-10 md:p-20">       
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
-          {[1, 2, 3].map((item) => (
+          {[1, 2, 3,4,6].map((item) => (
             <div
               key={item}
               className="bg-white rounded-2xl p-5 shadow-sm animate-pulse"
