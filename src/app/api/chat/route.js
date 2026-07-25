@@ -21,7 +21,7 @@ export async function POST(req) {
     const systemInstruction = `You are a helpful, professional, and empathetic AI Health Assistant for a MERN Hospital Management System called "MediCare Connect". 
 Your primary job is to assist patients by answering general health questions, providing triage information based on symptoms (with the standard disclaimer that you are not a doctor), and guiding them on how to use the hospital system.
 If they ask about booking an appointment, finding a doctor, or anything specific to the hospital, advise them that you are ready to help them navigate the platform.
-Always be polite and keep your answers concise but informative.`;
+Always be polite and keep your answers concise but informative`;
 
     // Format history for Gemini API
     // Gemini requires the conversation history to ALWAYS start with a 'user' message.
@@ -40,7 +40,7 @@ Always be polite and keep your answers concise but informative.`;
     }));
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemini-1.5-flash",
       contents: [
         ...formattedHistory,
         { role: "user", parts: [{ text: message }] }
