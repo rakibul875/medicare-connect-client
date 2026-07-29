@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { GoogleGenAI } from "@google/genai";
 
 export async function POST(req) {
   try {
@@ -15,46 +14,60 @@ export async function POST(req) {
       return NextResponse.json({ success: false, error: "Message is required" }, { status: 400 });
     }
 
-    // Initialize Gemini API
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    // Retrieve the Groq API key
+    const apiKey = process.env.GROCK_API_KEY;
+    if (!apiKey) {
+      return NextResponse.json({ success: false, error: "GrockCloud API key is not configured in .env" }, { status: 500 });
+    }
 
     const systemInstruction = `You are a helpful, professional, and empathetic AI Health Assistant for a MERN Hospital Management System called "MediCare Connect". 
 Your primary job is to assist patients by answering general health questions, providing triage information based on symptoms (with the standard disclaimer that you are not a doctor), and guiding them on how to use the hospital system.
 If they ask about booking an appointment, finding a doctor, or anything specific to the hospital, advise them that you are ready to help them navigate the platform.
 Always be polite and keep your answers concise but informative`;
 
-    // Format history for Gemini API
-    // Gemini requires the conversation history to ALWAYS start with a 'user' message.
-    let validHistory = history || [];
-    const firstUserIndex = validHistory.findIndex(msg => msg.role === 'user');
-
-    if (firstUserIndex !== -1) {
-      validHistory = validHistory.slice(firstUserIndex);
-    } else {
-      validHistory = [];
+    // Format history for Groq API (OpenAI compatible format)
+    let formattedHistory = [];
+    if (history && Array.isArray(history)) {
+      formattedHistory = history.map(msg => ({
+        role: msg.role === 'ai' || msg.role === 'assistant' ? 'assistant' : 'user',
+        content: msg.content
+      }));
     }
 
-    let formattedHistory = validHistory.map(msg => ({
-      role: msg.role === 'ai' ? 'model' : 'user',
-      parts: [{ text: msg.content }]
-    }));
+    // Prepare the messages array
+    const messages = [
+      { role: "system", content: systemInstruction },
+      ...formattedHistory,
+      { role: "user", content: message }
+    ];
 
-    const response = await ai.models.generateContent({
-      model: "gemini-1.5-flash",
-      contents: [
-        ...formattedHistory,
-        { role: "user", parts: [{ text: message }] }
-      ],
-      config: {
-        systemInstruction: systemInstruction,
-        temperature: 0.7,
-      }
+    // Call Groq API using fetch
+    const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: "llama-3.1-8b-instant",
+        messages: messages,
+        temperature: 0.7
+      })
     });
+
+    if (!groqResponse.ok) {
+      const errorData = await groqResponse.text();
+      console.error("Groq API Error Response:", errorData);
+      return NextResponse.json({ success: false, error: "Failed to generate response from GrockCloud API" }, { status: 500 });
+    }
+
+    const data = await groqResponse.json();
+    const replyText = data.choices?.[0]?.message?.content || "Sorry, I couldn't generate a response.";
 
     return NextResponse.json({
       success: true,
       data: {
-        reply: response.text
+        reply: replyText
       }
     }, { status: 200 });
 
