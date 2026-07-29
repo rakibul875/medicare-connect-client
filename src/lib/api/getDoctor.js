@@ -1,7 +1,8 @@
 import { handelGetSection, } from "../action/serverGet";
 
-export const getDoctor = () => {
-  return handelGetSection("/doctor");
+export const getDoctor = (page = 1, search = "", category = "") => {
+  const query = new URLSearchParams({ page, search, category }).toString();
+  return handelGetSection(`/doctor?${query}`);
 };
 
 export const getDoctorById = async (id) => {
