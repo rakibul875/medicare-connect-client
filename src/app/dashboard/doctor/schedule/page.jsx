@@ -13,10 +13,25 @@ const Schedule = async () => {
   }
 
   const doctorId = user?.id;
-  const allDoctors = await getDoctor();
-  const currentDoctorProfile = allDoctors.find(
-    (doctor) => doctor.doctorId === doctorId,
-  );
+  const allDoctorsResponse = await getDoctor();
+  
+  // Make the code resilient to different response shapes from the API
+  let allDoctors = [];
+  if (Array.isArray(allDoctorsResponse)) {
+    allDoctors = allDoctorsResponse;
+  } else if (allDoctorsResponse && Array.isArray(allDoctorsResponse.doctors)) {
+    // If the API returns { doctors: [...], totalCount: ... }
+    allDoctors = allDoctorsResponse.doctors;
+  }
+
+  // Runtime validation using Array.isArray before calling .find()
+  let currentDoctorProfile = null;
+  if (Array.isArray(allDoctors)) {
+    currentDoctorProfile = allDoctors.find(
+      (doctor) => doctor.doctorId === doctorId,
+    );
+  }
+
   if(!currentDoctorProfile){
     redirect('/dashboard/doctor/profile')
   }
