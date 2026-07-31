@@ -1,6 +1,6 @@
 import AddScheduleForm from "@/components/dashboard/doctor/AddScheduleForm";
 import ScheduleTable from "@/components/dashboard/doctor/ScheduleTable";
-import { getDoctor } from "@/lib/api/getDoctor";
+import { getAllDoctors, getDoctor } from "@/lib/api/getDoctor";
 import { getDoctorSchedule } from "@/lib/api/getDoctorSchedule";
 import { getUserSession } from "@/lib/api/getUsers";
 import { redirect } from "next/navigation";
@@ -13,32 +13,18 @@ const Schedule = async () => {
   }
 
   const doctorId = user?.id;
-  const allDoctorsResponse = await getDoctor();
-  
-  // Make the code resilient to different response shapes from the API
-  let allDoctors = [];
-  if (Array.isArray(allDoctorsResponse)) {
-    allDoctors = allDoctorsResponse;
-  } else if (allDoctorsResponse && Array.isArray(allDoctorsResponse.doctors)) {
-    // If the API returns { doctors: [...], totalCount: ... }
-    allDoctors = allDoctorsResponse.doctors;
-  }
+  const allDoctorsResponse = await getAllDoctors();
 
-  // Runtime validation using Array.isArray before calling .find()
-  let currentDoctorProfile = null;
-  if (Array.isArray(allDoctors)) {
-    currentDoctorProfile = allDoctors.find(
-      (doctor) => doctor.doctorId === doctorId,
-    );
-  }
+  const currentDoctorProfile = allDoctorsResponse.find(
+    (doctor) => doctor.doctorId === doctorId,
+  );
 
-  if(!currentDoctorProfile){
+  if (!currentDoctorProfile) {
     redirect('/dashboard/doctor/profile')
   }
   const schedules = (await getDoctorSchedule(doctorId)) || [];
 
-  const isApprovedByAdmin =
-    currentDoctorProfile?.verificationStatus === "approved";
+  const isApprovedByAdmin = currentDoctorProfile?.verificationStatus === "approved";
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto flex flex-col gap-8">

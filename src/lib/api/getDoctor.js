@@ -4,7 +4,9 @@ export const getDoctor = (page = 1, search = "", category = "") => {
   const query = new URLSearchParams({ page, search, category }).toString();
   return handelGetSection(`/doctor?${query}`);
 };
-
+export const getAllDoctors = () => {
+  return handelGetSection("/auth/all/doctors")
+}
 export const getDoctorById = async (id) => {
   return handelGetSection(`/doctor/${id}`);
 };
