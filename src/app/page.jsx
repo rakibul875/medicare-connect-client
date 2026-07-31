@@ -5,7 +5,7 @@ import WhyChoose from "@/components/home/WhyChoose";
 import HomeCard from "@/components/HomeCard";
 import Review from "@/components/Review";
 import { getAppointment } from "@/lib/api/getAppointment";
-import { getDoctor } from "@/lib/api/getDoctor";
+import { getAllDoctors } from "@/lib/api/getDoctor";
 import { getUser } from "@/lib/api/getUsers";
 import { getLastReview, getReview } from "@/lib/api/review";
 import { ArrowBigRight } from "lucide-react";
@@ -16,15 +16,15 @@ import React from "react";
 const HomePage = async () => {
   const appointment = await getAppointment();
   const totalAppointment = appointment.length;
-  const doctor = await getDoctor();
+  const doctor = await getAllDoctors();
   const totalDoctor = doctor.length;
   const reviews = await getReview();
   const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
   const averageRating = totalRating / reviews.length;
   const user = await getUser();
   const totalPatient = user?.filter((item) => item.role === "patient").length;
-  const review=await getLastReview()
-  
+  const review = await getLastReview()
+
 
   return (
     <div className="">
@@ -66,7 +66,7 @@ const HomePage = async () => {
       <WhyChoose />
       <div className="my-5 container mx-auto">
         <h1 className="text-2xl sm:text-3xl font-bold text-[#006694] text-center my-3">Patient Reviews</h1>
-        <Review reviews={review}/>
+        <Review reviews={review} />
       </div>
     </div>
   );
