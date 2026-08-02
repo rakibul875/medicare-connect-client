@@ -2,6 +2,7 @@
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
+import { Search } from "lucide-react";
 
 export default function SearchForm({ initialSearch, initialCategory }) {
   const router = useRouter();
@@ -9,22 +10,35 @@ export default function SearchForm({ initialSearch, initialCategory }) {
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
-  const handleSearch = (term, category) => {
+  const categories = [
+    "Neurology",
+    "Cardiology",
+    "Orthopedics",
+    "Pediatrics",
+    "Dermatology",
+    "Dentistry"
+  ];
+
+  const handleSearch = (newTerm, newCategory) => {
     const params = new URLSearchParams(searchParams.toString());
     
     // Reset to page 1 on new search
     params.set("page", "1");
 
-    if (term) {
-      params.set("search", term);
-    } else {
-      params.delete("search");
+    if (newTerm !== undefined) {
+      if (newTerm) {
+        params.set("search", newTerm);
+      } else {
+        params.delete("search");
+      }
     }
 
-    if (category) {
-      params.set("category", category);
-    } else {
-      params.delete("category");
+    if (newCategory !== undefined) {
+      if (newCategory) {
+        params.set("category", newCategory);
+      } else {
+        params.delete("category");
+      }
     }
 
     startTransition(() => {
@@ -32,34 +46,53 @@ export default function SearchForm({ initialSearch, initialCategory }) {
     });
   };
 
+  const currentSearch = searchParams.get("search") ?? initialSearch ?? "";
+  const currentCategory = searchParams.get("category") ?? initialCategory ?? "";
+
   return (
     <div className="mx-10 my-8">
-      <div className="flex flex-col md:flex-row gap-4">
-        <input
-          type="text"
-          defaultValue={initialSearch}
-          placeholder="Search by Doctor Name..."
-          onChange={(e) => handleSearch(e.target.value, searchParams.get("category") || "")}
-          className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
-        />
+      <div className="flex flex-col md:flex-row items-center gap-4 bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
+        {/* Search Input Area */}
+        <div className="flex-1 flex items-center bg-gray-50 rounded-lg px-3 py-2 w-full md:w-auto">
+          <Search className="text-gray-400 w-5 h-5 mr-2" />
+          <input
+            type="text"
+            defaultValue={currentSearch}
+            placeholder="Search doctor by name..."
+            onChange={(e) => handleSearch(e.target.value, undefined)}
+            className="flex-1 bg-transparent border-none focus:outline-none text-gray-700"
+          />
+        </div>
         
-        <select
-          defaultValue={initialCategory}
-          onChange={(e) => handleSearch(searchParams.get("search") || "", e.target.value)}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 bg-white"
-        >
-          <option value="">All Specialties</option>
-          <option value="Neurology">Neurology</option>
-          <option value="Cardiology">Cardiology</option>
-          <option value="Orthopedics">Orthopedics</option>
-          <option value="Pediatrics">Pediatrics</option>
-          <option value="Dermatology">Dermatology</option>
-          <option value="General Medicine">General Medicine</option>
-          <option value="Dentistry">Dentistry</option>
-        </select>
+        {/* Filter Buttons Area */}
+        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto pb-2 md:pb-0 overflow-x-auto no-scrollbar">
+          <button
+            onClick={() => handleSearch(undefined, "")}
+            className={`px-5 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+              currentCategory === "" 
+                ? "bg-[#F37021] text-white" 
+                : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+            }`}
+          >
+            All
+          </button>
+          
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => handleSearch(undefined, cat)}
+              className={`px-5 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+                currentCategory === cat 
+                  ? "bg-[#F37021] text-white" 
+                  : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
         
-        {/* We can keep a visual indicator if it's loading, but the button is no longer needed since it auto-updates */}
-        {isPending && <span className="text-cyan-500 self-center">Searching...</span>}
+        {isPending && <span className="text-cyan-500 self-center hidden md:block text-sm mr-2">...</span>}
       </div>
     </div>
   );
