@@ -14,7 +14,6 @@ export async function POST(req) {
       return NextResponse.json({ success: false, error: "Message is required" }, { status: 400 });
     }
 
-    // Retrieve the Groq API key
     const apiKey = process.env.GROCK_API_KEY;
     if (!apiKey) {
       return NextResponse.json({ success: false, error: "GrockCloud API key is not configured in .env" }, { status: 500 });
@@ -25,7 +24,6 @@ Your primary job is to assist patients by answering general health questions, pr
 If they ask about booking an appointment, finding a doctor, or anything specific to the hospital, advise them that you are ready to help them navigate the platform.
 Always be polite and keep your answers concise but informative`;
 
-    // Format history for Groq API (OpenAI compatible format)
     let formattedHistory = [];
     if (history && Array.isArray(history)) {
       formattedHistory = history.map(msg => ({
@@ -34,14 +32,14 @@ Always be polite and keep your answers concise but informative`;
       }));
     }
 
-    // Prepare the messages array
+ 
     const messages = [
       { role: "system", content: systemInstruction },
       ...formattedHistory,
       { role: "user", content: message }
     ];
 
-    // Call Groq API using fetch
+
     const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
