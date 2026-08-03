@@ -43,6 +43,7 @@ MediCare Connect is a modern, secure, and feature-rich healthcare management pla
 ### 👤 Patient Dashboard
 
 * Browse available doctors.
+* Advanced doctor search by name and category filtering.
 * Book appointments securely.
 * Online payment with **Stripe Checkout**.
 * Cancel booked appointments.
@@ -131,6 +132,7 @@ MediCare Connect is a modern, secure, and feature-rich healthcare management pla
 ## 📈 Core Functionalities
 
 * Role-Based Authentication
+* Advanced Doctor Search & Filtering
 * Doctor Verification System
 * Appointment Booking System
 * Stripe Payment Integration
