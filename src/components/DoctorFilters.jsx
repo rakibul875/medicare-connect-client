@@ -27,7 +27,7 @@ export default function DoctorFilters({
         onSubmit={handleSearchSubmit}
         className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end"
       >
-        {/* ১. সার্চ ইনপুট + সার্চ বাটন */}
+        
         <div className="md:col-span-6 flex gap-2 items-end">
           <div className="flex-1">
             <TextField
@@ -58,7 +58,7 @@ export default function DoctorFilters({
           </button>
         </div>
 
-        {/* ২. ক্যাটাগরি ড্রপডাউন */}
+        
         <div className="md:col-span-3">
           <span className="text-sm font-medium text-slate-700 block mb-2">
             Specialization
@@ -99,7 +99,6 @@ export default function DoctorFilters({
           </Select>
         </div>
 
-        {/* ৩. প্রাইস সর্টিং ড্রপডাউন */}
         <div className="md:col-span-3">
           <span className="text-sm font-medium text-slate-700 block mb-2">
             Price Filter
@@ -146,7 +145,7 @@ export default function DoctorFilters({
         </div>
       </form>
 
-      {/* রিসেট বাটন */}
+   
       {isFiltered && (
         <div className="flex justify-end pt-2">
           <button
