@@ -4,6 +4,7 @@ import NavBar from "@/components/shear/NavBar";
 import Footer from "@/components/shear/Footer";
 import AIAssistantWidget from "@/components/shear/AIAssistantWidget";
 import { Toaster } from "react-hot-toast";
+import SmoothScroll from "@/components/shear/SmoothScroll";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,12 +29,14 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="bg-light min-h-full flex flex-col">
-        <NavBar />
-        {children}
-        <Toaster />
-        <AIAssistantWidget />
-        <Footer/>
-        </body>
+        <SmoothScroll>
+          <NavBar />
+          {children}
+          <Toaster />
+          <AIAssistantWidget />
+          <Footer/>
+        </SmoothScroll>
+      </body>
     </html>
   );
 }
