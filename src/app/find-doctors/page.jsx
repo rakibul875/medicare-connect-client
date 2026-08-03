@@ -17,15 +17,12 @@ const FindDoctorsPage = async ({ searchParams }) => {
   
   const doctorResponse = await getDoctor(page, search, category);
   
-  // Depending on how backend returns data, it might be { doctors, totalCount } or just an array
-  // Assuming the new backend will return { doctors: [...], totalCount: number }
-  // We'll add a fallback in case the backend hasn't been updated yet
   const doctorData = Array.isArray(doctorResponse) ? doctorResponse : (doctorResponse?.doctors || []);
   const totalCount = Array.isArray(doctorResponse) ? doctorResponse.length : (doctorResponse?.totalCount || 0);
   
   const totalPages = Math.ceil(totalCount / 10) || 1;
 
-  // Helper for generating pagination links
+
   const createPageURL = (pageNumber) => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
