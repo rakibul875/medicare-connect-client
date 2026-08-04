@@ -26,9 +26,9 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       data-theme="light"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
-      <body className="bg-light min-h-full flex flex-col">
+      <body className="bg-light min-h-screen flex flex-col">
         <SmoothScroll>
           <NavBar />
           {children}
