@@ -37,7 +37,7 @@ const NavBar = () => {
   const Active = pathname === `/dashboard/${user?.role}`;
 
   return (
-    <nav className="bg-[#f8fafc] border-b border-gray-100 shadow-sm relative">
+    <nav className="bg-[#f8fafc]/90 backdrop-blur-md border-b border-gray-100 shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center space-x-2 flex-shrink-0">
