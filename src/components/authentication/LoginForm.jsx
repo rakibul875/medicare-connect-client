@@ -11,6 +11,7 @@ import { FaGoogle } from "react-icons/fa";
 const LoginForm = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router= useRouter()
 
   const handleChange = (e) => {
@@ -20,16 +21,24 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { data, error } = await authClient.signIn.email({
-      email: formData.email,
-      password: formData.password,
-    });
-    if (data) {
-      toast.success("sinIn successful");
-      router.push('/')
-    } else {
-      console.log("error", error.message);
-      toast.error(error.message);
+    setIsLoading(true);
+    try {
+      const { data, error } = await authClient.signIn.email({
+        email: formData.email,
+        password: formData.password,
+      });
+      if (data) {
+        toast.success("sinIn successful");
+        router.push('/')
+      } else {
+        console.log("error", error.message);
+        toast.error(error.message);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -44,6 +53,14 @@ const LoginForm = () => {
     }
   };
 
+  const handleDemoLogin = (role) => {
+    if (role === "patient") {
+      setFormData({ email: "ashik@gmail.com", password: "Ashik@875218594" });
+    } else if (role === "doctor") {
+      setFormData({ email: "doctor12@gmail.com", password: "Ashik@875218594" });
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-md border border-gray-100">
@@ -54,6 +71,26 @@ const LoginForm = () => {
           <p className="mt-2 text-sm text-gray-600">
             Login to access your MediCare Connect account
           </p>
+        </div>
+
+        <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mt-4 space-y-2">
+          <p className="text-xs font-semibold text-[#006694] uppercase tracking-wider">Demo Login</p>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => handleDemoLogin("patient")}
+              className="flex-1 py-1.5 px-3 bg-white border border-[#006694] text-[#006694] hover:bg-[#006694] hover:text-white rounded-lg text-xs font-medium transition-colors duration-200"
+            >
+              Patient Demo
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDemoLogin("doctor")}
+              className="flex-1 py-1.5 px-3 bg-white border border-[#006694] text-[#006694] hover:bg-[#006694] hover:text-white rounded-lg text-xs font-medium transition-colors duration-200"
+            >
+              Doctor Demo
+            </button>
+          </div>
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -168,9 +205,10 @@ const LoginForm = () => {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-[#006694] hover:bg-[#00557c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#006694] transition-all shadow-md"
+              disabled={isLoading}
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-[#006694] hover:bg-[#00557c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#006694] transition-all shadow-md disabled:opacity-75 disabled:cursor-not-allowed"
             >
-              Sign In
+              {isLoading ? "login..." : "Sign In"}
             </button>
           </div>
         </form>
