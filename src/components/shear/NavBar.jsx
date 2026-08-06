@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Avatar, Button, Dropdown, Label } from "@heroui/react";
 import { getUserSession } from "@/lib/api/getUsers";
 import { authClient } from "@/lib/auth-client";
@@ -11,6 +11,7 @@ import { ArrowRightFromSquare } from "@gravity-ui/icons";
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
@@ -18,7 +19,13 @@ const NavBar = () => {
     return null;
   }
   const handelLogOut = async () => {
-    await authClient.signOut();
+    try {
+      await authClient.signOut();
+      router.push("/login");
+      router.refresh();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const navItems = [
@@ -104,15 +111,11 @@ const NavBar = () => {
                         id="logout"
                         textValue="Logout"
                         variant="danger"
+                        onPress={handelLogOut}
                       >
-                        <div className="flex w-full items-center justify-between gap-2">
-                          <button
-                            onClick={handelLogOut}
-                            className="rounded-none border-none text-red-600"
-                          >
-                            Log Out
-                          </button>
-                          <ArrowRightFromSquare className="size-3.5 text-danger" />
+                        <div className="flex w-full items-center justify-between gap-2 text-danger">
+                          <span>Log Out</span>
+                          <ArrowRightFromSquare className="size-3.5" />
                         </div>
                       </Dropdown.Item>
                     </Dropdown.Menu>

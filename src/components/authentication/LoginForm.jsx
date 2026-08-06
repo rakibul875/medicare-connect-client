@@ -12,11 +12,13 @@ const LoginForm = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedRole, setSelectedRole] = useState(null);
   const router= useRouter()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setSelectedRole(null);
   };
 
   const handleSubmit = async (e) => {
@@ -54,6 +56,7 @@ const LoginForm = () => {
   };
 
   const handleDemoLogin = (role) => {
+    setSelectedRole(role);
     if (role === "patient") {
       setFormData({ email: "ashik@gmail.com", password: "Ashik@875218594" });
     } else if (role === "doctor") {
@@ -79,14 +82,22 @@ const LoginForm = () => {
             <button
               type="button"
               onClick={() => handleDemoLogin("patient")}
-              className="flex-1 py-1.5 px-3 bg-white border border-[#006694] text-[#006694] hover:bg-[#006694] hover:text-white rounded-lg text-xs font-medium transition-colors duration-200"
+              className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-medium transition-colors duration-200 ${
+                selectedRole === "patient"
+                  ? "bg-[#006694] text-white border border-[#006694] shadow-sm"
+                  : "bg-white border border-[#006694] text-[#006694] hover:bg-[#006694] hover:text-white"
+              }`}
             >
               Patient Demo
             </button>
             <button
               type="button"
               onClick={() => handleDemoLogin("doctor")}
-              className="flex-1 py-1.5 px-3 bg-white border border-[#006694] text-[#006694] hover:bg-[#006694] hover:text-white rounded-lg text-xs font-medium transition-colors duration-200"
+              className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-medium transition-colors duration-200 ${
+                selectedRole === "doctor"
+                  ? "bg-[#006694] text-white border border-[#006694] shadow-sm"
+                  : "bg-white border border-[#006694] text-[#006694] hover:bg-[#006694] hover:text-white"
+              }`}
             >
               Doctor Demo
             </button>
