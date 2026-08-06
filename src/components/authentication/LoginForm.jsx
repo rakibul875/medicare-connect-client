@@ -13,7 +13,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedRole, setSelectedRole] = useState(null);
-  const router= useRouter()
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +31,7 @@ const LoginForm = () => {
       });
       if (data) {
         toast.success("sinIn successful");
-        router.push('/')
+        router.push("/");
       } else {
         console.log("error", error.message);
         toast.error(error.message);
@@ -51,14 +51,14 @@ const LoginForm = () => {
     if (data) {
       toast.success("singUp Successful");
     } else {
-      toast.error(error.message)
+      toast.error(error.message);
     }
   };
 
   const handleDemoLogin = (role) => {
     setSelectedRole(role);
     if (role === "patient") {
-      setFormData({ email: "ashik@gmail.com", password: "Ashik@875218594" });
+      setFormData({ email: "ashik1@gmail.com", password: "Ashik@875218594" });
     } else if (role === "doctor") {
       setFormData({ email: "doctor12@gmail.com", password: "Ashik@875218594" });
     }
@@ -77,7 +77,9 @@ const LoginForm = () => {
         </div>
 
         <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mt-4 space-y-2">
-          <p className="text-xs font-semibold text-[#006694] uppercase tracking-wider">Demo Login</p>
+          <p className="text-xs font-semibold text-[#006694] uppercase tracking-wider">
+            Demo Login
+          </p>
           <div className="flex gap-2">
             <button
               type="button"
