@@ -1,10 +1,15 @@
 "use client";
 
-import { ArrowRightFromSquare, Bars, Envelope, Gear, Magnifier, Person } from "@gravity-ui/icons";
+import {
+  ArrowRightFromSquare,
+  Bars,
+  Envelope,
+  Gear,
+  Magnifier,
+  Person,
+} from "@gravity-ui/icons";
 import { Avatar, Button, Drawer } from "@heroui/react";
 import {
-  BarChart3,
-  Bell,
   Calendar,
   ClipboardList,
   CreditCard,
@@ -88,7 +93,11 @@ const SideBare = ({ user }) => {
         path: "/dashboard/admin",
       },
       { icon: Users, label: "Manage Users", path: "/dashboard/admin/users" },
-      { icon: HeartPulse, label: "Manage Doctors", path: "/dashboard/admin/doctors" },
+      {
+        icon: HeartPulse,
+        label: "Manage Doctors",
+        path: "/dashboard/admin/doctors",
+      },
       {
         icon: Calendar,
         label: "Manage Appointments",
@@ -118,7 +127,9 @@ const SideBare = ({ user }) => {
                 : "text-foreground hover:bg-cyan-100"
             }`}
           >
-            <item.icon className={`size-5 ${isActive ? "text-white" : "text-muted"}`} />
+            <item.icon
+              className={`size-5 ${isActive ? "text-white" : "text-muted"}`}
+            />
             {item.label}
           </Link>
         );
@@ -204,9 +215,7 @@ const SideBare = ({ user }) => {
                 </Drawer.Header>
                 <Drawer.Body>
                   <div className="flex flex-col justify-between h-full min-h-[calc(100vh-150px)]">
-                    <div>
-                      {neviCationItems}
-                    </div>
+                    <div>{neviCationItems}</div>
                     {footerActions}
                   </div>
                 </Drawer.Body>
