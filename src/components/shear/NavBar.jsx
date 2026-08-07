@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Avatar, Button, Dropdown, Label } from "@heroui/react";
+import { Avatar, Button, Dropdown } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
 import { ArrowRightFromSquare } from "@gravity-ui/icons";
 
