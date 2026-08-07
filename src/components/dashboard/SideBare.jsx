@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  ArrowRightFromSquare,
-  Bars,
-  Envelope,
-  Gear,
-  Magnifier,
-  Person,
-} from "@gravity-ui/icons";
+import { ArrowRightFromSquare, Bars, Person } from "@gravity-ui/icons";
 import { Avatar, Button, Drawer } from "@heroui/react";
 import {
   Calendar,
