@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Avatar, Button, Dropdown, Label } from "@heroui/react";
-import { getUserSession } from "@/lib/api/getUsers";
 import { authClient } from "@/lib/auth-client";
 import { ArrowRightFromSquare } from "@gravity-ui/icons";
 
